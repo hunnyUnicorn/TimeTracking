@@ -1,0 +1,772 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row g-3 mb-3 align-items-center">
+            <div class="col-xl-7 col-lg-12 col-md-12">
+                <ul class="nav nav-tabs tab-body-header rounded">
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#summery-today">TODAY</a></li>
+                    <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#summery-yesterday" onclick="return chartFunctiontwo()">YESTERDAY</a></li>
+                    <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#summery-week" onclick="return chartFunctionthree()">PAST 7 DAYS</a></li>
+                    <li class="nav-item"><a class="nav-link " data-bs-toggle="tab" href="#summery-month" onclick="return chartFunctionfour()">PAST 30 DAYS</a></li>
+                </ul>
+            </div>
+            <div class="col-xl-5 col-lg-12 col-md-12">
+                <div class="row g-2">
+                    <div class="col-12 col-md-6">
+                        <div class="input-group-lg">
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-group-lg">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Select User</option>
+                                <option value="1">Grace</option>
+                                <option value="2">Gabrielle</option>
+                                <option value="3">Molly</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-12">
+                <div class="tab-content mt-1">
+                    <div class="tab-pane fade show active" id="summery-today">
+                        <div class="row g-3 mb-3 row-deck">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Total time tracked</span>
+                                        <div><span class="fs-6 fw-bold me-2">8h 51m</span></div>
+                                        <small class="text-muted d-block">This week: 9h 34m</small>
+                                        <small class="text-muted d-block">This month: 97h 52m</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3 position-relative">
+                                        <span class="text-muted">Idle minutes </span>
+                                        <div><span class="fs-6 fw-bold me-2">8M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Unproductive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">16M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Productive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">7H</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Manual time</span>
+                                        <div><span class="fs-6 fw-bold me-2">5M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Mobile time</span>
+                                        <div><span class="fs-6 fw-bold me-2">0M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header d-flex  align-items-center bg-transparent border-bottom-0 flex-wrap py-3">
+                                        <h6 class="m-0 fw-bold">Timeline</h6>
+                                        <div class="timeinfo-block d-flex flex-wrap ms-auto">
+                                            <div class="report ms-3">
+                                                <a href="timeline.html" class="text-secondary underline">Timeline Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="apex-timeline" style="margin-left: -25px;"></div>
+                                        <div class="timeinfo-block d-flex flex-wrap justify-content-end">
+                                            <div class="start-time text-muted">
+                                                <i class="icofont-ui-play"></i>
+                                                <span>Start time: 9:55 AM</span>
+                                            </div>
+                                            <div class="end-time ms-3 text-muted">
+                                                <i class="icofont-ui-play-stop"></i>
+                                                <span>End time: 12:03 PM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- row end -->
+                    </div>
+                    <div class="tab-pane fade" id="summery-yesterday">
+                        <div class="row g-3 mb-3 row-deck">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Total time tracked</span>
+                                        <div><span class="fs-6 fw-bold me-2">9h 03m</span></div>
+                                        <small class="text-muted d-block">This week: 9h 03m</small>
+                                        <small class="text-muted d-block">This month: 97h 52m</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3 position-relative">
+                                        <span class="text-muted">Idle minutes </span>
+                                        <div><span class="fs-6 fw-bold me-2">25M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Unproductive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">36M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Productive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">7H 30M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Manual time</span>
+                                        <div><span class="fs-6 fw-bold me-2">5M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Mobile time</span>
+                                        <div><span class="fs-6 fw-bold me-2">0M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                                        <h6 class="m-0 fw-bold">Hours tracked</h6>
+                                    </div>
+                                    <div class="card-body py-xl-4 py-3">
+                                        <div id="apex-stacked-area-yes"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- row end -->
+                    </div>
+                    <div class="tab-pane fade" id="summery-week">
+                        <div class="row g-3 mb-3 row-deck">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Total time tracked</span>
+                                        <div><span class="fs-6 fw-bold me-2">28h 27m</span></div>
+                                        <small class="text-muted d-block">This week: 29h 34m</small>
+                                        <small class="text-muted d-block">This month: 167h 52m</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3 position-relative">
+                                        <span class="text-muted">Idle minutes </span>
+                                        <div><span class="fs-6 fw-bold me-2">68M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 60%" aria-valuenow="60"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Unproductive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">66M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 66%" aria-valuenow="66"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Productive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">28H</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 70%" aria-valuenow="70"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Manual time</span>
+                                        <div><span class="fs-6 fw-bold me-2">15M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Mobile time</span>
+                                        <div><span class="fs-6 fw-bold me-2">0M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                                        <h6 class="m-0 fw-bold">Hours tracked</h6>
+                                    </div>
+                                    <div class="card-body py-xl-4 py-3">
+                                        <div id="apex-stacked-area"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- row end -->
+                    </div>
+                    <div class="tab-pane fade" id="summery-month">
+                        <div class="row g-3 mb-3 row-deck">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Total time tracked</span>
+                                        <div><span class="fs-6 fw-bold me-2">8h 51m</span></div>
+                                        <small class="text-muted d-block">This week: 9h 34m</small>
+                                        <small class="text-muted d-block">This month: 97h 52m</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3 position-relative">
+                                        <span class="text-muted">Idle minutes </span>
+                                        <div><span class="fs-6 fw-bold me-2">8M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Unproductive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">16M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Productive time</span>
+                                        <div><span class="fs-6 fw-bold me-2">7H</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Manual time</span>
+                                        <div><span class="fs-6 fw-bold me-2">5M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body py-xl-4 py-3">
+                                        <span class="text-muted">Mobile time</span>
+                                        <div><span class="fs-6 fw-bold me-2">0M</span></div>
+                                        <div class="progress mt-4" style="height: 8px;">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                                        <h6 class="m-0 fw-bold">Hours tracked</h6>
+                                    </div>
+                                    <div class="card-body py-xl-4 py-3">
+                                        <div id="apex-stacked-area-month"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- row end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                        <h6 class="m-0 fw-bold">Recent Screencasts</h6>
+                        <div class="report ms-3">
+                            <a href="screencasts.html" class="text-secondary underline">All Screencasts</a>
+                        </div>
+                    </div>
+                    <div class="card-body" id="aniimated-thumbnials">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 row-cols-xl-6 row-cols-xxl-6 g-3">
+                            <div class="col">
+                                <div class="screen-card shadow-sm p-2">
+                                    <a href="assets/images/gallery/1.jpg">
+                                        <img class="img-fluid img-thumbnail" src="assets/images/gallery/1.jpg" alt="">
+                                    </a>
+                                    <div class="user-profile d-flex align-items-center mt-3">
+                                        <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                        <div class="u-info ms-2">
+                                            <span class="fw-bold">John Quinn</span>
+                                            <span class="text-muted">10:02 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-activity d-flex justify-content-between">
+                                        <div class="keybord-block w-50 pe-1">
+                                            <i class="icofont-ui-keyboard "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mouse-block w-50 ps-1 text-end">
+                                            <i class="icofont-wireless-mouse "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="screen-card shadow-sm p-2">
+                                    <a href="assets/images/gallery/2.jpg">
+                                        <img class="img-fluid img-thumbnail" src="assets/images/gallery/2.jpg" alt="">
+                                    </a>
+                                    <div class="user-profile d-flex align-items-center mt-3">
+                                        <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                        <div class="u-info ms-2">
+                                            <span class="fw-bold">John Quinn</span>
+                                            <span class="text-muted">10:30 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-activity d-flex justify-content-between">
+                                        <div class="keybord-block w-50 pe-1">
+                                            <i class="icofont-ui-keyboard "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mouse-block w-50 ps-1 text-end">
+                                            <i class="icofont-wireless-mouse "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="screen-card shadow-sm p-2">
+                                    <a href="assets/images/gallery/3.jpg">
+                                        <img class="img-fluid img-thumbnail" src="assets/images/gallery/3.jpg" alt="">
+                                    </a>
+                                    <div class="user-profile d-flex align-items-center mt-3">
+                                        <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                        <div class="u-info ms-2">
+                                            <span class="fw-bold">John Quinn</span>
+                                            <span class="text-muted">10:45 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-activity d-flex justify-content-between">
+                                        <div class="keybord-block w-50 pe-1">
+                                            <i class="icofont-ui-keyboard "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mouse-block w-50 ps-1 text-end">
+                                            <i class="icofont-wireless-mouse "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="screen-card shadow-sm p-2">
+                                    <a href="assets/images/gallery/4.jpg">
+                                        <img class="img-fluid img-thumbnail" src="assets/images/gallery/4.jpg" alt="">
+                                    </a>
+                                    <div class="user-profile d-flex align-items-center mt-3">
+                                        <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                        <div class="u-info ms-2">
+                                            <span class="fw-bold">John Quinn</span>
+                                            <span class="text-muted">11:02 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-activity d-flex justify-content-between">
+                                        <div class="keybord-block w-50 pe-1">
+                                            <i class="icofont-ui-keyboard "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mouse-block w-50 ps-1 text-end">
+                                            <i class="icofont-wireless-mouse "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="screen-card shadow-sm p-2">
+                                    <a href="assets/images/gallery/5.jpg">
+                                        <img class="img-fluid img-thumbnail" src="assets/images/gallery/5.jpg" alt="">
+                                    </a>
+                                    <div class="user-profile d-flex align-items-center mt-3">
+                                        <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                        <div class="u-info ms-2">
+                                            <span class="fw-bold">John Quinn</span>
+                                            <span class="text-muted">12:45 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-activity d-flex justify-content-between">
+                                        <div class="keybord-block w-50 pe-1">
+                                            <i class="icofont-ui-keyboard "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mouse-block w-50 ps-1 text-end">
+                                            <i class="icofont-wireless-mouse "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="screen-card shadow-sm p-2">
+                                    <a href="assets/images/gallery/6.jpg">
+                                        <img class="img-fluid img-thumbnail" src="assets/images/gallery/6.jpg" alt="">
+                                    </a>
+                                    <div class="user-profile d-flex align-items-center mt-3">
+                                        <img class="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile">
+                                        <div class="u-info ms-2">
+                                            <span class="fw-bold">John Quinn</span>
+                                            <span class="text-muted">03:08 PM</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-activity d-flex justify-content-between">
+                                        <div class="keybord-block w-50 pe-1">
+                                            <i class="icofont-ui-keyboard "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mouse-block w-50 ps-1 text-end">
+                                            <i class="icofont-wireless-mouse "></i>
+                                            <div class="progress" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-3 row-deck">
+            <div class="col-lg-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                        <h6 class="m-0 fw-bold">Top used web & app</h6>
+                        <div class="report ms-3">
+                            <a href="#" class="text-secondary underline">Website & App</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> linkedin.Com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">2h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> my.indeed.com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">3h 30m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> in.indeed.com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">1h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> mail.google.com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">2h 10m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-xl-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                        <h6 class="m-0 fw-bold">Unproductive web & app</h6>
+                        <div class="report ms-3">
+                            <a href="#" class="text-secondary underline">Website & App</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> my.indeed.com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">1h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> my.indeed.com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">1h 20m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-30">
+                                <i class="icofont-world pe-2 fs-5"></i> my.indeed.com
+                            </div>
+                            <div class="site-progress w-25 my-2 my-sm-0">
+                                <div class="progress" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="site-time">
+                                <span class="fw-bold">1h 10m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-3 row-deck">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                        <h6 class="m-0 fw-bold">Top tasks</h6>
+                        <div class="report ms-3">
+                            <a href="projects.html" class="text-secondary underline">Project Report</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-25 mb-2 mb-sm-0">
+                                Design Index Page
+                            </div>
+                            <div class="site-time">
+                                <span class="bg-lightblue px-3 py-1 d-inline rounded">Design</span>
+                                <span class="fw-bold ms-1">2h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-25 mb-2 mb-sm-0">
+                                Create Blog
+                            </div>
+                            <div class="site-time">
+                                <span class="light-danger-bg px-3 py-1 d-inline rounded">Marketing</span>
+                                <span class="fw-bold ms-1">4h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-25 mb-2 mb-sm-0">
+                                Authentication
+                            </div>
+                            <div class="site-time">
+                                <span class="light-orange-bg px-3 py-1 d-inline rounded">Development</span>
+                                <span class="fw-bold ms-1">1h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-25 mb-2 mb-sm-0">
+                                Crude oprtaion
+                            </div>
+                            <div class="site-time">
+                                <span class="light-orange-bg px-3 py-1 d-inline rounded">Development</span>
+                                <span class="fw-bold ms-1">1h 10m</span>
+                            </div>
+                        </div>
+                        <div class="site-block-list d-flex align-items-center flex-wrap justify-content-sm-between mb-3">
+                            <div class="site-list w-25 mb-2 mb-sm-0">
+                                Create Logo
+                            </div>
+                            <div class="site-time">
+                                <span class="bg-lightblue px-3 py-1 d-inline rounded">Design</span>
+                                <span class="fw-bold ms-1">2h 10m</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 py-3">
+                        <h6 class="m-0 fw-bold">Top projects</h6>
+                        <div class="report ms-3">
+                            <a href="task.html" class="text-secondary underline">Project Report</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3 row-cols-1 row-cols-sm-3 row-cols-md-3 row-cols-lg-3">
+                            <div class="col"><div id="apex-circle-chart-one"></div></div>
+                            <div class="col"><div id="apex-circle-chart-two"></div></div>
+                            <div class="col"><div id="apex-circle-chart-three"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   

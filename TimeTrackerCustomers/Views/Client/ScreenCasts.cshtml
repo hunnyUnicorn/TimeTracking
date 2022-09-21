@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "ScreenCasts";
+    Layout = "~/Views/Shared/_LayoutClients.cshtml";
+    var developers = ViewData["Developers"] as List<SelectListItem>;
+}
+
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom">
+                    <h3 class="h4 mb-0">Screencasts</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-3 align-items-center">
+            <div class="col-xl-5 col-lg-12 col-md-12">
+                <ul class="nav nav-tabs tab-body-header rounded">
+                    <li class="nav-item"><a class="nav-link btnTimeFrame" href="#" avalue="1">TODAY</a></li>
+                    <li class="nav-item"><a class="nav-link btnTimeFrame" href="#" avalue="2">WEEK</a></li>
+                    <li class="nav-item"><a class="nav-link active btnTimeFrame" href="#" avalue="3">MONTH</a></li>
+                </ul>
+            </div>
+            <div class="col-xl-7 col-lg-12 col-md-12">
+                <div class="row g-2">
+                    <div class="col-12 col-md-6">
+                        <div class="input-group-lg">
+                            <input type="date" class="form-control" id="datePicker">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-group-lg">
+                            <select class="form-select" id="Developers" aria-label="Default select example" asp-items="developers">
+                                <option selected="">Search By Developer</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3" id="screencastlist">
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+           $(document).ready(function () {
+               $.ajax({
+                   url: '@Url.Action("ScreenCastList","Client")',
+                   type: "post",
+                   data: { filter:0,value:0}
+            }).done(function (data) {
+                $('#screencastlist').html(data);
+            });
+
+               var today = new Date().toISOString().split('T')[0];
+               $("#datePicker").val(today);
+           });
+        $('.btnTimeFrame').click(function (e) {
+            e.preventDefault()
+            var value = $(this).attr('avalue');
+             $.ajax({
+                   url: '@Url.Action("ScreenCastList","Client")',
+                   type: "post",
+                 data: { filter: 2, value: value }
+            }).done(function (data) {
+                $('#screencastlist').html(data);
+                });
+        });
+        $('#datePicker').on('input', function (e) {
+            var input = $(this);
+            var val = input.val();
+             $.ajax({
+                   url: '@Url.Action("ScreenCastList","Client")',
+                   type: "post",
+                 data: { filter: 3, value: val }
+            }).done(function (data) {
+                $('#screencastlist').html(data);
+                });
+        });
+        $('#Developers').change(function () {
+                var selected = $(this).val();
+                $.ajax({
+                   url: '@Url.Action("ScreenCastList","Client")',
+                   type: "post",
+                 data: { filter: 4, value: selected }
+            }).done(function (data) {
+                $('#screencastlist').html(data);
+                });
+            });
+    </script>
+}

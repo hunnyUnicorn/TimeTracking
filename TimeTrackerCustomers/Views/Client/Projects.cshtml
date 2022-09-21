@@ -1,0 +1,198 @@
+﻿@model DBL.Entities.Project
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Views/Shared/_LayoutClients.cshtml";
+}
+
+<div class="body d-flex py-lg-3 py-md-2">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header p-0 no-bg bg-transparent align-items-center px-0 d-flex border-bottom flex-wrap">
+                    <h3 class="h4 py-3 mb-0">Projects</h3>
+                    <div class="d-flex py-2 project-tab flex-wrap w-sm-100 ms-auto">
+                        <button type="button" class="btn btn-dark w-sm-100 mb-2 mb-md-0" data-bs-toggle="modal" data-bs-target="#createproject"><i class="icofont-plus-circle me-2 fs-6"></i>Create Project</button>
+                        <ul class="nav nav-tabs tab-body-header rounded ms-0 ms-md-3 prtab-set w-sm-100" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#All-list" role="tab">All</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Started-list" role="tab">Started</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Approval-list" role="tab">Approval</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Completed-list" role="tab">Completed</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Row end  -->
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-md-12 flex-column">
+                <div class="tab-content mt-4 project-board">
+                    <div class="tab-pane fade show active" id="All-list">
+                        <div class="row g-3 gy-5 py-3 row-deck" id="prjectsContainer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createproject" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Create Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="CreateProject">
+                    <div class="mb-3">
+                        <label asp-for="ProjectName" class="form-label">Project Name</label>
+                        <input type="text" asp-for="ProjectName" class="form-control" placeholder="Explain what the Project Name">
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ProjCatCode" class="form-label">Project Category</label>
+                        <select asp-for="ProjCatCode" class="form-select" aria-label="Default select Project Category">
+                            <option value="100">UI/UX Design</option>
+                            <option value="101">Website Design</option>
+                            <option value="102">App Development</option>
+                            <option value="103">Quality Assurance</option>
+                            <option value="104">Development</option>
+                            <option value="105">Backend Development</option>
+                            <option value="106">Software Testing</option>
+                            <option value="107">Website Design</option>
+                            <option value="108">Marketing</option>
+                            <option value="109">SEO</option>
+                            <option value="110">Other</option>
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFileMultipleone" class="form-label">Project Images & Document</label>
+                        <input class="form-control" type="file" id="formFileMultipleone" multiple>
+                    </div>
+                    <div class="deadline-form">
+
+                        <div class="row g-3 mb-3">
+                            <div class="col">
+                                <label asp-for="StartDate" for="datepickerded" class="form-label">Project Start Date</label>
+                                <input type="date" asp-for="StartDate" class="form-control" id="datepickerded">
+                            </div>
+                            <div class="col">
+                                <label asp-for="EndDate" for="datepickerdedone" class="form-label">Project End Date</label>
+                                <input asp-for="EndDate" type="date" class="form-control" id="datepickerdedone">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-12">
+                                <label asp-for="NotifType" class="form-label">Notifation Sent</label>
+                                <select asp-for="NotifType" class="form-select" aria-label="Default select example">
+                                    <option selected>All</option>
+                                    <option value="100">Team Leader Only</option>
+                                    <option value="101">Team Member Only</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="formFileMultipleone" class="form-label">Task Assign Person</label>
+                                <select class="form-select" multiple aria-label="Default select Priority">
+                                    <option selected>Lucinda Massey</option>
+                                    <option value="1">Ryan Nolan</option>
+                                    <option value="2">Oliver Black</option>
+                                    <option value="3">Adam Walker</option>
+                                    <option value="4">Brian Skinner</option>
+                                    <option value="5">Dan Short</option>
+                                    <option value="5">Jack Glover</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm">
+                            <label asp-for="Budget" for="formFileMultipleone" class="form-label">Budget</label>
+                            <input asp-for="Budget" class="form-control">
+                        </div>
+                        <div class="col-sm">
+                            <label asp-for="Priority" for="formFileMultipleone" class="form-label">Priority</label>
+                            <select asp-for="Priority" class="form-select" aria-label="Default select Priority">
+                                <option value="100">Highest</option>
+                                <option value="101">Medium</option>
+                                <option value="102">Low</option>
+                                <option value="103">Lowest</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ProjectDescr" for="exampleFormControlTextarea78" class="form-label">Description (optional)</label>
+                        <textarea asp-for="ProjectDescr" class="form-control" id="exampleFormControlTextarea78" rows="3" placeholder="Add any extra details about the request"></textarea>
+                    </div>
+                    <div class="row">
+                        <label class="text-danger" id="errorMessage"></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+                <button type="submit" form="CreateProject" class="btn btn-primary">Create</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Members-->
+
+@section Scripts{
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $.get( '@Url.Action("ProjectList", "Client", new { status = 0 } )', function(data) {
+                    $('#prjectsContainer').html(data);
+                });
+            });
+        $("#CreateProject").submit(function (e) {
+
+            //prevent Default functionality
+            e.preventDefault();
+
+            //get the action-url of the form
+            console.log("We are heerr");
+            //do your own request an handle the results
+            $.ajax({
+                url: '@Url.Action("CreateProject", "Client")',
+                type: "post",
+                data: $("#CreateProject").serialize()
+            }).done(function (data) {
+                if (data.success) {
+                    $("#errorMessage").removeClass("text-danger");
+                    $("#errorMessage").addClass("text-success");
+                    $("#errorMessage").text(data.message);
+                }
+                else {
+                    $("#errorMessage").text(data.message);
+                }
+                });
+        });
+        $(".InviteDeveloper").submit(function (e) {
+
+            //prevent Default functionality
+            e.preventDefault();
+
+            //get the action-url of the form
+            console.log("We are heerr");
+            //do your own request an handle the results
+            $.ajax({
+                url: '@Url.Action("InviteDeveloper", "Client")',
+                type: "post",
+                data: $(this).serialize()
+            }).done(function (data) {
+                    console.log("We are here")
+                    console.log(JSON.stringify(data));
+                    if (data.success) {
+                        window.location.href = '@Url.Action("Login","Account")';
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                });
+        });
+
+    </script>
+}

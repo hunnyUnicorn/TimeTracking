@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/_LayoutUnAuth.cshtml";
+}
+<!-- Body: Body -->
+<div class="body d-flex p-0 p-md-2 p-xl-5">
+    <div class="container-xxl">
+        <div class="row g-0 rounded-3 mt-2 mt-md-0 justify-content-center">
+            <div class="col-lg-6 d-flex justify-content-center align-items-center  bg-secondary py-2 py-md-0">
+                <div class="d-flex flex-column p-2">
+                    <h1>Create Your Account</h1>
+                    <span>Register with your email or mobile</span>
+                    <ul class="nav nav-pills mt-4" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#Developer" role="tab">Developer</a></li>
+                        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Client" role="tab">Client</a></li>
+                    </ul>
+                    <div class="tab-content mt-4 mb-3">
+                        <div class="tab-pane fade show active" id="Developer">
+                            <div class="card">
+                                <div class="card-body p-4">
+                                    <form id="DeveloperForm" method="post">
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">First Name</label>
+                                            <input type="text" name="FirstName" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Middle Name</label>
+                                            <input type="text" name="MiddleName" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Surname</label>
+                                            <input type="text" name="Surname" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Email address</label>
+                                            <input type="email" name="email" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Password</label>
+                                            <input type="password" name="RawPass" class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2">Create Account</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="Client">
+                            <div class="card">
+                                <div class="card-body p-4">
+                                    <form id="ClientForm">
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Client Name</label>
+                                            <input type="text" name="ClientName" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Email address</label>
+                                            <input type="email" name="email" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fs-6">Password</label>
+                                            <input type="password" name="RawPass" class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2">Create Account</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="text-primary" href="auth-signin.html" title="#">Already registered? <span class="text-primary text-decoration-underline">Log In</span></a>
+                </div>
+            </div>
+        </div> <!-- End Row -->
+
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $("#DeveloperForm").submit(function (e) {
+
+            //prevent Default functionality
+            e.preventDefault();
+
+            //get the action-url of the form
+            console.log("We are heerr");
+            //do your own request an handle the results
+            $.ajax({
+                url: '@Url.Action("SignUpDeveloper","Home")',
+                type: "post",
+                data: $("#DeveloperForm").serialize()
+            }).done(function (data) {
+                    console.log("We are here")
+                    console.log(JSON.stringify(data));
+                    if (data.success) {
+                        window.location.href = '@Url.Action("EmailVerification","Home")';
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                });
+        });
+        $("#ClientForm").submit(function (e) {
+
+            //prevent Default functionality
+            e.preventDefault();
+
+            //get the action-url of the form
+            console.log("We are heerr");
+            //do your own request an handle the results
+            $.ajax({
+                url: '@Url.Action("SignUpClient","Home")',
+                type: "post",
+                data: $("#ClientForm").serialize()
+            }).done(function (data) {
+                    console.log("We are here")
+                    console.log(JSON.stringify(data));
+                    if (data.success) {
+                        window.location.href = '@Url.Action("EmailVerification","Home")';
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                });
+        });
+    </script>
+
+}

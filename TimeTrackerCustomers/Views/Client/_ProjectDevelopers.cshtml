@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Developer>
+<h6 class="fw-bold ">Person </h6>
+<ul class="list-unstyled list-group list-group-custom list-group-flush mb-0">
+    @foreach (var member in Model)
+    {
+        <li class="list-group-item py-3 text-center text-md-start">
+            <div class="d-flex align-items-center flex-column flex-sm-column flex-md-column flex-lg-row">
+                <div class="no-thumbnail mb-2 mb-md-0">
+                    <img class="avatar lg rounded-circle" src="~/images/xs/avatar2.svg" alt="">
+                </div>
+                <div class="flex-fill ms-3 text-truncate">
+                    <h6 class="mb-0  fw-bold">@member.FirstName @member.Surname</h6>
+                    <span class="text-muted">@member.email</span>
+                </div>
+                <div class="members-action">
+                    <span class="members-role ">Admin</span>
+                    <div class="btn-group">
+                        <button type="button" class="btn bg-transparent dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="icofont-ui-settings  fs-6"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="icofont-ui-password fs-6 me-2"></i>ResetPassword</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="icofont-chart-line fs-6 me-2"></i>ActivityReport</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+</ul>

@@ -1,0 +1,217 @@
+﻿<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>::Timetracker:: Signin</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon"> <!-- Favicon-->
+    <!-- project css file  -->
+    <link rel="stylesheet" href="~/css/timetracker.style.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<body>
+    <div id="timetracker-layout" class="theme-mist">
+
+        <!-- main body area -->
+        <div class="main p-2 py-3 p-xl-5">
+
+            <!-- Body: Header -->
+            <div class="container-xxl">
+                <!-- header rightbar icon -->
+                <div class="row align-items-center">
+                    <div class="col">
+                        <a href="../index.html" class="d-flex align-item-center">
+                            <i class="icofont-stopwatch fs-3"></i>
+                            <h5 class="mb-0 mt-1 mx-2">TimeTracker</h5>
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <div class="d-flex align-item-center">
+                            @*<div class="dropdown">
+                                    <a class="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
+                                        <img src="~/images/flag/GB.png" alt="">
+                                    </a>
+                                    <div class="dropdown-menu rounded-lg shadow border-0  dropdown-menu-md-end p-0 m-0">
+                                        <div class="card border-0">
+                                            <ul class="list-unstyled py-2 px-3">
+                                                <li>
+                                                    <a href="#" class=""><img src="~/images/flag/GB.png" alt=""> English</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class=""><img src="~/images/flag/DE.png" alt=""> German</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class=""><img src="~/images/flag/FR.png" alt=""> French</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class=""><img src="~/images/flag/IT.png" alt=""> Italian</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class=""><img src="~/images/flag/RU.png" alt=""> Russian</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>*@
+                            <div class="setting ms-2 mt-1">
+                                <a asp-action="Login" asp-controller="Account" class="btn btn-secondary">Log in</a>
+                            </div>
+                            <div class="setting ms-2 mt-1">
+                                <a asp-action="SignUp" asp-controller="Home" class="btn bg-secondary text-white">Sign Up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body: Body -->
+            @RenderBody()
+
+            <!-- Modal Custom Settings-->
+            <div class="modal fade right" id="Settingmodal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog  modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Custom Settings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body custom_setting">
+                            <!-- Settings: Color -->
+                            <div class="setting-theme pb-3">
+                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-color-bucket fs-4 me-2 text-primary"></i>Template Color Settings</h6>
+                                <ul class="list-unstyled row row-cols-3 g-2 choose-skin mb-2 mt-2">
+                                    <li data-theme="indigo"><div class="indigo"></div></li>
+                                    <li data-theme="tradewind"><div class="tradewind"></div></li>
+                                    <li data-theme="monalisa"><div class="monalisa"></div></li>
+                                    <li data-theme="mist" class="active"><div class="mist"></div></li>
+                                    <li data-theme="cyan"><div class="cyan"></div></li>
+                                    <li data-theme="green"><div class="green"></div></li>
+                                    <li data-theme="orange"><div class="orange"></div></li>
+                                    <li data-theme="blush"><div class="blush"></div></li>
+                                    <li data-theme="red"><div class="red"></div></li>
+                                </ul>
+                            </div>
+                            <!-- Settings: Template dynamics -->
+                            <div class="dynamic-block py-3">
+                                <ul class="list-unstyled choose-skin mb-2 mt-1">
+                                    <li data-theme="dynamic"><div class="dynamic"><i class="icofont-paint me-2"></i> Click to Dyanmic Setting</div></li>
+                                </ul>
+                                <div class="dt-setting">
+                                    <ul class="list-group list-unstyled mt-1">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label>Primary Color</label>
+                                            <button id="primaryColorPicker" class="btn bg-primary avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label>Secondary Color</label>
+                                            <button id="secondaryColorPicker" class="btn bg-secondary avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label class="text-muted">Chart Color 1</label>
+                                            <button id="chartColorPicker1" class="btn chart-color1 avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label class="text-muted">Chart Color 2</label>
+                                            <button id="chartColorPicker2" class="btn chart-color2 avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label class="text-muted">Chart Color 3</label>
+                                            <button id="chartColorPicker3" class="btn chart-color3 avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label class="text-muted">Chart Color 4</label>
+                                            <button id="chartColorPicker4" class="btn chart-color4 avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
+                                            <label class="text-muted">Chart Color 5</label>
+                                            <button id="chartColorPicker5" class="btn chart-color5 avatar xs border-0 rounded-0"></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Settings: Font -->
+                            <div class="setting-font py-3">
+                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-font fs-4 me-2 text-primary"></i> Font Settings</h6>
+                                <ul class="list-group font_setting mt-1">
+                                    <li class="list-group-item py-1 px-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="radio" name="font" id="font-poppins" value="font-poppins">
+                                            <label class="form-check-label" for="font-poppins">
+                                                Poppins Google Font
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item py-1 px-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="radio" name="font" id="font-opensans" value="font-opensans">
+                                            <label class="form-check-label" for="font-opensans">
+                                                Open Sans Google Font
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item py-1 px-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="radio" name="font" id="font-montserrat" value="font-montserrat">
+                                            <label class="form-check-label" for="font-montserrat">
+                                                Montserrat Google Font
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item py-1 px-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="radio" name="font" id="font-Plex" value="font-Plex" checked="">
+                                            <label class="form-check-label" for="font-Plex">
+                                                Plex Google Font
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Settings: Light/dark -->
+                            <div class="setting-mode py-3">
+                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-layout fs-4 me-2 text-primary"></i>Contrast Layout</h6>
+                                <ul class="list-group list-unstyled mb-0 mt-1">
+                                    <li class="list-group-item d-flex align-items-center py-1 px-2">
+                                        <div class="form-check form-switch theme-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" id="theme-switch">
+                                            <label class="form-check-label" for="theme-switch">Enable Dark Mode!</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center py-1 px-2">
+                                        <div class="form-check form-switch theme-high-contrast mb-0">
+                                            <input class="form-check-input" type="checkbox" id="theme-high-contrast">
+                                            <label class="form-check-label" for="theme-high-contrast">Enable High Contrast</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item d-flex align-items-center py-1 px-2">
+                                        <div class="form-check form-switch theme-rtl mb-0">
+                                            <input class="form-check-input" type="checkbox" id="theme-rtl">
+                                            <label class="form-check-label" for="theme-rtl">Enable RTL Mode!</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-start">
+                            <button type="button" class="btn btn-white border lift" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary lift">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <!-- Jquery Core Js -->
+    <script src="~/bundles/libscripts.bundle.js"></script>
+
+    <!-- Jquery Page Js -->
+    <script src="~/js/template.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
