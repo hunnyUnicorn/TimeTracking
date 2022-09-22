@@ -21,6 +21,8 @@ namespace DBL.Models
         public string Salt { get; set; }
         [JsonProperty("pass")]
         public string RawPass { get; set; }
+        [JsonIgnore]
+        public string UserIdentifier { get; set; }
     }
     public class ClientLogin
     {

@@ -82,7 +82,7 @@ namespace TimeTrackerCustomers.Controllers
                 reqResult.Message = result.RespMessage;
                 if (result.RespStatus == 0)
                 {
-
+                    reqResult.Data = result.Data1;
                     reqResult.Success = true;
                 }
                 else

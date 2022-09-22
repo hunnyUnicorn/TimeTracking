@@ -115,7 +115,7 @@
                     console.log("We are here")
                     console.log(JSON.stringify(data));
                     if (data.success) {
-                        window.location.href = '@Url.Action("EmailVerification","Home",new { useridentifier = ViewBag.UserIdentifier})';
+                        window.location.href = '@Url.Action("EmailVerification","Home")?useridentifier=' + data.data;
                     }
                     else {
                         alert(data.message);

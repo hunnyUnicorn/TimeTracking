@@ -80,5 +80,18 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<GenericModel>("Sp_Verify_VCode", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
+        public async Task<GenericModel> UpdateVCodes(string useridentifier,int usertype)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@useridentifier", useridentifier);
+                parameters.Add("@usertype", usertype);
+
+                return (await connection.QueryAsync<GenericModel>("Sp_Update_VCode_Dets", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
     }
 }

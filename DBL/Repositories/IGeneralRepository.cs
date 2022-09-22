@@ -14,5 +14,6 @@ namespace DBL.Repositories
         Task<int> GetUserType(string email);
         Task<GenericModel> CreateVCode(VCodeModel model);
         Task<GenericModel> GetVCodeDetails(string useridentifier);
+        Task<GenericModel> UpdateVCodes(string useridentifier, int usertype);
     }
 }

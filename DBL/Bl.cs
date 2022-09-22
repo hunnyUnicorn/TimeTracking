@@ -565,6 +565,8 @@ namespace DBL
                 var sec = new TSSecurity();
                 if (sec.ValidatePassword(model.VerifcationCode, vcodedetails.Data1, vcodedetails.Data2))
                 {
+                    var updateResponse = await db.GeneralRepository.UpdateVCodes(model.userIdentifier, Convert.ToInt32(vcodedetails.Data3));
+
                     return new BaseEntity { 
                         RespMessage="success",
                         RespStatus = 0
@@ -671,7 +673,41 @@ namespace DBL
 
             model.Salt = salt;
             model.Pwd = password;
+            model.UserIdentifier = Guid.NewGuid().ToString();
             var result = await db.ClientsRepository.RegisterClient(model);
+            result.Data1 = model.UserIdentifier;
+            if (result.RespStatus == 0)
+            {
+                //Generate Verification Code
+                VCodeModel vCode = new VCodeModel();
+                string verificationCode = Util.GenerateSimplePassword();
+                vCode.RawVCode = verificationCode;
+                vCode.Salt = security.GenerateSalt();
+                vCode.VCode = security.HashPassword(verificationCode, vCode.Salt);
+                vCode.UserType = USER_TYPE.CLIENT;
+                vCode.useridentifier = model.UserIdentifier;
+                try
+                {
+                    var vcodeResp = await db.GeneralRepository.CreateVCode(vCode);
+                    if (vcodeResp.RespStatus == 0)
+                    {
+                        int port = Convert.ToInt32(vcodeResp.Data5);
+                        SendMail(vcodeResp.Data4, port, vcodeResp.Data6 == "1", vcodeResp.Data7, vcodeResp.Data8, vcodeResp.Data3, vcodeResp.Data9, vcodeResp.Data2);
+                    }
+                    else
+                    {
+                        result.RespStatus = 1;
+                        result.RespMessage = "Error occured when executing your request";
+                        LogUtil.Error(LogFile, "Generate VCode", new Exception(vcodeResp.RespMessage));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.Error(LogFile, "Generate VCode", ex);
+                    result.RespStatus = 1;
+                    result.RespMessage = "Error occured when executing your request";
+                }
+            }
             return result;
         }
         public async Task<IEnumerable<screenshotdets>> GetScreenshotClientAsync(int filter,string value,int clientcode)
