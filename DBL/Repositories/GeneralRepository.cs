@@ -52,5 +52,33 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<int>("Sp_Verify_User_Type", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
+        public async Task<GenericModel> CreateVCode(VCodeModel model)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@RawVCode", model.RawVCode);
+                parameters.Add("@VCode", model.VCode);
+                parameters.Add("@Salt", model.Salt);
+                parameters.Add("@usertype", model.UserType);
+                parameters.Add("@useridentifier", model.useridentifier);
+
+                return (await connection.QueryAsync<GenericModel>("Sp_Create_VerificationCode", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<GenericModel> GetVCodeDetails(string useridentifier)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@userIdentifier", useridentifier);
+
+                return (await connection.QueryAsync<GenericModel>("Sp_Verify_VCode", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
     }
 }

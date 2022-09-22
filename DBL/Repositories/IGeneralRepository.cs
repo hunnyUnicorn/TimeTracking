@@ -12,5 +12,7 @@ namespace DBL.Repositories
         Task<List<ListModel>> GetItemListAsync(ListItemType itemType, int code = 0);
         Task<SysSetting> SysSetting(string name);
         Task<int> GetUserType(string email);
+        Task<GenericModel> CreateVCode(VCodeModel model);
+        Task<GenericModel> GetVCodeDetails(string useridentifier);
     }
 }

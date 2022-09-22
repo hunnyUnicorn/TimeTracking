@@ -29,6 +29,7 @@ namespace DBL.Repositories
                 parameters.Add("@email", model.email);
                 parameters.Add("@Salt", model.Salt);
                 parameters.Add("@Pwd", model.Pwd);
+                parameters.Add("@userIdentifier", model.UserIdentifier);
                 return (await connection.QueryAsync<GenericModel>("Sp_Create_Developer", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }

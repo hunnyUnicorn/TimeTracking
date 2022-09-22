@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Taiwac.Tools;
 using DBL.Consts;
 using DBL.Enums;
+using System.Net.Mail;
+using System.Net;
 
 namespace DBL
 {
@@ -512,6 +514,7 @@ namespace DBL
             model.Pwd = password;
             model.UserIdentifier = Guid.NewGuid().ToString();
             var result = await db.DeveloperRepository.RegisterDeveloper(model);
+            result.Data1 = model.UserIdentifier;
             if(result.RespStatus==0)
             {
                 //Generate Verification Code
@@ -522,8 +525,28 @@ namespace DBL
                 vCode.VCode = security.HashPassword(verificationCode, vCode.Salt);
                 vCode.UserType = USER_TYPE.DEVELOPER;
                 vCode.useridentifier = model.UserIdentifier;
+                try
+                {
+                    var vcodeResp = await db.GeneralRepository.CreateVCode(vCode);
+                    if (vcodeResp.RespStatus == 0)
+                    {
+                        int port = Convert.ToInt32(vcodeResp.Data5);
+                        SendMail(vcodeResp.Data4, port, vcodeResp.Data6 == "1", vcodeResp.Data7, vcodeResp.Data8, vcodeResp.Data3, vcodeResp.Data9, vcodeResp.Data2);
+                    }
+                    else
+                    {
+                        result.RespStatus = 1;
+                        result.RespMessage = "Error occured when executing your request";
+                        LogUtil.Error(LogFile, "Generate VCode", new Exception(vcodeResp.RespMessage));
+                    }
+                }
+                catch(Exception ex)
+                {
+                    LogUtil.Error(LogFile, "Generate VCode", ex);
+                    result.RespStatus = 1;
+                    result.RespMessage = "Error occured when executing your request";
+                }
             }
-
             return result;
         }
 
@@ -533,6 +556,37 @@ namespace DBL
         {
             var usertype = await db.GeneralRepository.GetUserType(model.Username);
             return usertype;
+        }
+        public async Task<BaseEntity> VerifyEmail(EmailVerification model)
+        {
+            var vcodedetails = await db.GeneralRepository.GetVCodeDetails(model.userIdentifier);
+            if(vcodedetails.RespStatus==0)
+            {
+                var sec = new TSSecurity();
+                if (sec.ValidatePassword(model.VerifcationCode, vcodedetails.Data1, vcodedetails.Data2))
+                {
+                    return new BaseEntity { 
+                        RespMessage="success",
+                        RespStatus = 0
+                    };
+                }
+                else
+                {
+                    return new BaseEntity
+                    {
+                        RespMessage = "Invalid verification code",
+                        RespStatus = 1
+                    };
+                }
+            }
+            else
+            {
+                return new BaseEntity
+                {
+                    RespStatus = vcodedetails.RespStatus,
+                    RespMessage = vcodedetails.RespMessage
+                };
+            }
         }
         public async Task<IEnumerable<ListModel>> GetItemListAsync(ListItemType itemType, int code = 0)
         {
@@ -647,6 +701,64 @@ namespace DBL
         }
         #endregion
         #endregion
+        #region Other Functions
+        private void SendMail(string host, int port, bool ssl, string user, string pass, string subject, string toEmail, string mailMessage, List<MailAttachment> attachments = null)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    string[] userData = user.Split(',');
+                    string userName = userData[0];
+                    string userTitle = "";
+                    if (userData.Length == 2)
+                        userTitle = userData[1];
 
+                    MailMessage mail = new MailMessage()
+                    {
+                        From = new MailAddress(userName, userTitle),
+                        IsBodyHtml = true
+                    };
+
+                    string[] emails = toEmail.Split(',');
+                    foreach (string email in emails)
+                    {
+                        mail.To.Add(new MailAddress(email.Trim()));
+                    }
+
+                    mail.Subject = subject;
+                    mail.Priority = MailPriority.High;
+                    mail.Body = mailMessage;
+
+                    //================== Attachments ===================
+                    if (attachments != null)
+                    {
+                        foreach (var att in attachments)
+                        {
+                            if (att.ItemStream != null)
+                                mail.Attachments.Add(new Attachment(att.ItemStream, att.ItemName, att.MediaType));
+                        }
+                    }
+                    //===================================================
+
+                    using (SmtpClient smtp = new SmtpClient(host, port))
+                    {
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential(userName, pass);
+                        smtp.EnableSsl = ssl;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        //smtp.Timeout = 30000;
+                        smtp.Send(mail);
+                    }
+
+                    LogUtil.Infor(LogFile, "Bl.SendMail()", "Email sent.....");
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.Error(LogFile, "Bl.SendMail()", ex);
+                }
+            });
+        }
+        #endregion
     }
 }

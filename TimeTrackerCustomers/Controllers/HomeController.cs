@@ -50,6 +50,8 @@ namespace TimeTrackerCustomers.Controllers
                 {
                    
                     reqResult.Success = true;
+
+                    reqResult.Data = result.Data1;
                 }
                 else
                 {
@@ -103,23 +105,28 @@ namespace TimeTrackerCustomers.Controllers
             return Json(reqResult);
         }
         [HttpGet]
-        public async Task<IActionResult> EmailVerification(string Email)
+        public async Task<IActionResult> EmailVerification(string useridentifier)
         {
-
-            return View();
+            EmailVerification model = new EmailVerification();
+            model.userIdentifier=useridentifier;
+            return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> EmailVerification(string Email)
+        public async Task<IActionResult> EmailVerification(EmailVerification model)
         {
             try
             {
-
+                var resp = await bl.VerifyEmail(model);
+                if(resp.RespStatus==0)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
             catch(Exception ex)
             {
-
+                LogUtil.Error(logFile, "Home.SignUpClient()", ex);
             }
-            return View();
+            return View(model);
         }
     }
 }

@@ -12,7 +12,9 @@
 </head>
 <body>
     <div id="timetracker-layout" class="theme-mist">
-
+        <div class="toast-container" style="position: absolute; top: 10px; left: 0; right: 0; margin: auto">
+            <partial name="_Alerts" />
+        </div>
         <!-- main body area -->
         <div class="main p-2 py-3 p-xl-5">
 
@@ -29,31 +31,31 @@
                     <div class="col-auto">
                         <div class="d-flex align-item-center">
                             @*<div class="dropdown">
-                                    <a class="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
-                                        <img src="~/images/flag/GB.png" alt="">
-                                    </a>
-                                    <div class="dropdown-menu rounded-lg shadow border-0  dropdown-menu-md-end p-0 m-0">
-                                        <div class="card border-0">
-                                            <ul class="list-unstyled py-2 px-3">
-                                                <li>
-                                                    <a href="#" class=""><img src="~/images/flag/GB.png" alt=""> English</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class=""><img src="~/images/flag/DE.png" alt=""> German</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class=""><img src="~/images/flag/FR.png" alt=""> French</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class=""><img src="~/images/flag/IT.png" alt=""> Italian</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class=""><img src="~/images/flag/RU.png" alt=""> Russian</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                <a class="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
+                                    <img src="~/images/flag/GB.png" alt="">
+                                </a>
+                                <div class="dropdown-menu rounded-lg shadow border-0  dropdown-menu-md-end p-0 m-0">
+                                    <div class="card border-0">
+                                        <ul class="list-unstyled py-2 px-3">
+                                            <li>
+                                                <a href="#" class=""><img src="~/images/flag/GB.png" alt=""> English</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class=""><img src="~/images/flag/DE.png" alt=""> German</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class=""><img src="~/images/flag/FR.png" alt=""> French</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class=""><img src="~/images/flag/IT.png" alt=""> Italian</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class=""><img src="~/images/flag/RU.png" alt=""> Russian</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </div>*@
+                                </div>
+                            </div>*@
                             <div class="setting ms-2 mt-1">
                                 <a asp-action="Login" asp-controller="Account" class="btn btn-secondary">Log in</a>
                             </div>
@@ -66,6 +68,7 @@
             </div>
 
             <!-- Body: Body -->
+
             @RenderBody()
 
             <!-- Modal Custom Settings-->
@@ -206,7 +209,7 @@
         </div>
 
     </div>
-
+   
     <!-- Jquery Core Js -->
     <script src="~/bundles/libscripts.bundle.js"></script>
 
