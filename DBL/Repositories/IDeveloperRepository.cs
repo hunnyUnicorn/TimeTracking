@@ -16,5 +16,6 @@ namespace DBL.Repositories
         Task<IEnumerable<Project>> GetAssignedProjects(int devcode);
         Task<BaseEntity> RecordScreenshot(Screenshot model);
         Task<IEnumerable<screenshotdets>> GetScreenShots(int filterType, string value, int clientcode);
+        Task<BaseEntity> CreateTimeFrame(Screenshot model);
     }
 }

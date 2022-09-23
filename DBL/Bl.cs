@@ -553,6 +553,14 @@ namespace DBL
         {
             return await db.ClientsRepository.GetScreenShotsPerClient(filter, value, clientcode);
         }
+        public async Task<IEnumerable<Project>> GetDeveloperProjects(int devcode)
+        {
+            return await db.DeveloperRepository.GetAssignedProjects(devcode);
+        }
+        public async Task<BaseEntity> CreateTimeFrame(TimeTrack model)
+        {
+            return await db.DeveloperRepository.CreateTimeFrame(model);
+        }
         #endregion
         #region Common Actions
         public async Task<int> Login(UserLoginModel model)

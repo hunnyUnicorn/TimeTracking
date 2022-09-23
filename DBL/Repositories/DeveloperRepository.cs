@@ -88,5 +88,17 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<screenshotdets>("Sp_ScreenCasts_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
+        public async Task<BaseEntity> CreateTimeFrame(Screenshot model)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@TTDescr", model.ScrName);
+                parameters.Add("@DevCode", model.DevCode);
+                parameters.Add("@ProjCode", model.ProjCode);
+                return (await connection.QueryAsync<BaseEntity>("Sp_Add_TimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
     }
 }
