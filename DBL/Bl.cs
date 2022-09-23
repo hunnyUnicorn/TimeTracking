@@ -549,7 +549,10 @@ namespace DBL
             }
             return result;
         }
-
+        public async Task<IEnumerable<screenshotdets>> GetScreenshotClientAsync(int filter, string value, int clientcode)
+        {
+            return await db.ClientsRepository.GetScreenShotsPerClient(filter, value, clientcode);
+        }
         #endregion
         #region Common Actions
         public async Task<int> Login(UserLoginModel model)
@@ -710,9 +713,9 @@ namespace DBL
             }
             return result;
         }
-        public async Task<IEnumerable<screenshotdets>> GetScreenshotClientAsync(int filter,string value,int clientcode)
+        public async Task<IEnumerable<screenshotdets>> GetDeveloperScreenShots(int filter,string value,int clientcode)
         {
-            return await db.ClientsRepository.GetScreenShotsPerClient(filter,value,clientcode);
+            return await db.DeveloperRepository.GetScreenShots(filter,value,clientcode);
         }
         #region projects
         public async Task<BaseEntity> CreateProject(Project project)

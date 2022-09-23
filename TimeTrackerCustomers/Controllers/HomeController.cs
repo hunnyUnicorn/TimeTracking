@@ -7,7 +7,7 @@ using TimeTrackerCustomers.Models;
 
 namespace TimeTrackerCustomers.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         Bl bl;
         private string logFile;

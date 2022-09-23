@@ -76,5 +76,17 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<BaseEntity>("Sp_Screenshot", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
+        public async Task<IEnumerable<screenshotdets>> GetScreenShots(int filterType, string value, int clientcode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@Filter", filterType);
+                parameters.Add("@Value", value);
+                parameters.Add("@DevCode", clientcode);
+                return (await connection.QueryAsync<screenshotdets>("Sp_ScreenCasts_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace DBL.Models
 {
     public class Developer:BaseEntity
     {
-        [JsonIgnore]
+        [JsonProperty("dcode")]
         public int DevCode { get; set; }
         [JsonProperty("fname")]
         public string FirstName { get; set; }

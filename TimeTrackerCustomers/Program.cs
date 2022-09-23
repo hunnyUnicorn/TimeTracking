@@ -38,6 +38,11 @@ app.UseStaticFiles(new StaticFileOptions()
     FileProvider = new PhysicalFileProvider2(builder.Configuration["ImagesFolder"]),
     RequestPath = new PathString("/ScreenCasts"),
 });
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider2(builder.Configuration["DesktopAppFolder"]),
+    RequestPath = new PathString("/DesktopApp"),
+});
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

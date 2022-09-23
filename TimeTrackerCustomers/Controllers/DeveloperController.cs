@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace TimeTrackerCustomers.Controllers
 {
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-    public class DeveloperController : Controller
+    public class DeveloperController : BaseController
     {
         private Bl bl;
         private string logFile;
@@ -21,6 +21,12 @@ namespace TimeTrackerCustomers.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> DashBoard()
+        {
+            ViewBag.ScreenCasts = (await bl.GetDeveloperScreenShots(0,"0",SessionDeveloperData.DevCode)).ToList();
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Projects()
         {
             return View();
         }
