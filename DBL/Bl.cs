@@ -382,7 +382,8 @@ namespace DBL
 ;
                     screenshot.ScrName = Guid.NewGuid().ToString();
                     screenshot.base64String = screenshot.base64String.Substring(screenshot.base64String.LastIndexOf(',') + 1);
-                    string filepath =Path.Combine(@"E:\TimeTrackerImages", screenshot.ScrName+".png") ;
+                    //string filepath =Path.Combine(@"E:\TimeTrackerImages", screenshot.ScrName+".png") ;
+                    string filepath =Path.Combine(@"h:\\root\\home\\peterwesh-001\\www\\TimeTrackerImages", screenshot.ScrName+".png") ;
                     Util.SaveImage(screenshot.base64String, filepath);
                     var screenshotResp = await db.DeveloperRepository.RecordScreenshot(screenshot);
                     resp.RespStatus = screenshotResp.RespStatus;
@@ -557,9 +558,13 @@ namespace DBL
         {
             return await db.DeveloperRepository.GetAssignedProjects(devcode);
         }
-        public async Task<BaseEntity> CreateTimeFrame(TimeTrack model)
+        public async Task<GenericModel> CreateTimeFrame(TimeTrack model)
         {
             return await db.DeveloperRepository.CreateTimeFrame(model);
+        }
+        public async Task<BaseEntity> StopTimeFrame(int TTCode, int KeyHits, int mouseHits)
+        {
+            return await db.DeveloperRepository.StopTimeFrame(TTCode,KeyHits,mouseHits);
         }
         #endregion
         #region Common Actions

@@ -88,16 +88,28 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<screenshotdets>("Sp_ScreenCasts_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
-        public async Task<BaseEntity> CreateTimeFrame(Screenshot model)
+        public async Task<GenericModel> CreateTimeFrame(TimeTrack model)
         {
             using (var connection = new SqlConnection(_connString))
             {
                 connection.Open();
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@TTDescr", model.ScrName);
+                parameters.Add("@TTDescr", model.TTDescr);
                 parameters.Add("@DevCode", model.DevCode);
-                parameters.Add("@ProjCode", model.ProjCode);
-                return (await connection.QueryAsync<BaseEntity>("Sp_Add_TimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+                parameters.Add("@ProjCode", model.ProjectCode);
+                return (await connection.QueryAsync<GenericModel>("Sp_Add_TimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<BaseEntity> StopTimeFrame(int TTCode,int KeyHits,int mouseHits)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@TimeTrackCode", TTCode);
+                parameters.Add("@KeyboardHits", KeyHits);
+                parameters.Add("@MouseClicks", mouseHits);
+                return (await connection.QueryAsync<BaseEntity>("Sp_CloseTimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
     }

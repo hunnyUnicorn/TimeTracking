@@ -4,79 +4,124 @@
     Layout = "~/Views/Shared/_LayoutDevelopers.cshtml";
 }
 @model IEnumerable<DBL.Entities.Project>
-    <div class="body d-flex py-lg-3 py-md-2">
-        <div class="container-xxl">
-            <div class="row align-items-center">
-                <div class="border-0 mb-4">
-                    <div class="card-header p-0 no-bg bg-transparent align-items-center px-0 d-flex border-bottom flex-wrap">
-                        <h3 class="h4 py-3 mb-0">Projects</h3>
-                        <div class="d-flex py-2 project-tab flex-wrap w-sm-100 ms-auto">
-                            <button type="button" class="btn btn-dark w-sm-100 mb-2 mb-md-0" data-bs-toggle="modal" data-bs-target="#createproject"><i class="icofont-plus-circle me-2 fs-6"></i>Create Project</button>
-                            <ul class="nav nav-tabs tab-body-header rounded ms-0 ms-md-3 prtab-set w-sm-100" role="tablist">
-                                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#All-list" role="tab">All</a></li>
-                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Started-list" role="tab">Started</a></li>
-                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Approval-list" role="tab">Approval</a></li>
-                                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Completed-list" role="tab">Completed</a></li>
-                            </ul>
-                        </div>
+<div class="body d-flex py-lg-3 py-md-2">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header p-0 no-bg bg-transparent align-items-center px-0 d-flex border-bottom flex-wrap">
+                    <h3 class="h4 py-3 mb-0">Projects</h3>
+                    <div class="d-flex py-2 project-tab flex-wrap w-sm-100 ms-auto">
+                        <button type="button" class="btn btn-dark w-sm-100 mb-2 mb-md-0" data-bs-toggle="modal" data-bs-target="#createproject"><i class="icofont-plus-circle me-2 fs-6"></i>Create Project</button>
+                        <ul class="nav nav-tabs tab-body-header rounded ms-0 ms-md-3 prtab-set w-sm-100" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#All-list" role="tab">All</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Started-list" role="tab">Started</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Approval-list" role="tab">Approval</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#Completed-list" role="tab">Completed</a></li>
+                        </ul>
                     </div>
                 </div>
-            </div> <!-- Row end  -->
-            <div class="row align-items-center">
-                <div class="col-lg-12 col-md-12 flex-column">
-                    <div class="tab-content mt-4 project-board">
-                        <div class="tab-pane fade show active" id="All-list">
-                            <div class="row g-3 gy-5 py-3 row-deck" id="prjectsContainer">
-                                @foreach (var project in Model)
-                                {
-                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center justify-content-between mt-5">
-                                                    <div class="lesson_name">
-                                                        <div class="project-block light-info-bg">
-                                                            <i class="icofont-paint"></i>
-                                                        </div>
-                                                        <span class="medium text-muted project_name fw-bold">@project.ProjectName</span>
-                                                        <h6 class="mb-0 fw-bold  fs-6  mb-2">@project.CategoryName</h6>
+            </div>
+        </div> <!-- Row end  -->
+        <div class="row align-items-center">
+            <div class="col-lg-12 col-md-12 flex-column">
+                <div class="tab-content mt-4 project-board">
+                    <div class="tab-pane fade show active" id="All-list">
+                        <div class="row g-3 gy-5 py-3 row-deck" id="prjectsContainer">
+                            @foreach (var project in Model)
+                            {
+                                <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between mt-5">
+                                                <div class="lesson_name">
+                                                    <div class="project-block light-info-bg">
+                                                        <i class="icofont-paint"></i>
                                                     </div>
-                                                   
+                                                    <span class="medium text-muted project_name fw-bold">@project.ProjectName</span>
+                                                    <h6 class="mb-0 fw-bold  fs-6  mb-2">@project.CategoryName</h6>
                                                 </div>
-                                                <div class="dividers-block"></div>
-                                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                                    <span class="small bg-danger text-white  p-1 rounded px-2"><i class="icofont-ui-clock me-2"></i><strong id="@String.Format("timer{0}",project.ProjectCode)">00:00:00</strong></span>
-                                                    <a href="#" class="btn btn-success" id="startTracking" target="@String.Format("#timer{0}",project.ProjectCode)"><i class="icofont-edit"  ></i> Start Tracking</a>
-                                                </div>
-                                                
+
                                             </div>
+                                            <div class="dividers-block"></div>
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <span class="small bg-danger text-white  p-1 rounded px-2"><i class="icofont-ui-clock me-2"></i><strong id="@String.Format("timer{0}",project.ProjectCode)">00:00:00</strong></span>
+                                                <a href="#" class="btn btn-success" id="startTracking" target="@String.Format("#timer{0}",project.ProjectCode)" p-code="@project.ProjectCode"><i class="icofont-edit"></i> Start Tracking</a>
+                                            </div>
+
                                         </div>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+@section css{
+    <link rel="stylesheet" href="~/lib/sweetalert2/dist/sweetalert2.css">
+}
 @section Scripts{
+    <script src="~/lib/sweetalert2/dist/sweetalert2.js"></script>
     <script>
             var interval = null;
-            var counter = 0
+        var counter = 0;
+        var TTCode = 0;
+        var keyboardClicks = 0;
+        var mouseClicks = 150;
             $('#startTracking').click(function (e) {
                 e.preventDefault();
                 var labelToUpdate = $(this).attr('target');
+                var pcode = $(this).attr('p-code');
+                
                 if (interval == null) {
-                    interval = setInterval(function(){
-                        $(labelToUpdate).html(convertMsToTime(counter));
-                        counter++;
-                    }, 1000);
+                 
+                    Swal.fire({
+                        title: "Activity Description",
+                        input: 'text',
+                        showClass: {
+                            popup: 'animate__animated animate__fadeInDown'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOutUp'
+                        },
+                        inputPlaceholder: "Enter the activity description",
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Activity description is required!'
+                            }
+                        }
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.cancel)
+                            return;
+                        if (result.value === false) return false;
+                        if (result.value === "") {
+                            swal.showInputError("Activity description is required!");
+                            return false
+                        }
+                        keyboardClicks = 0;
+                        mouseClicks = 4;
+                        PostBeginTimeFrame(pcode, result.value);
+                        $(this).text("Stop Tracking");
+                        $(this).removeClass("btn-success");
+                        $(this).addClass("btn-danger");
+                        interval = setInterval(function () {
+                            $(labelToUpdate).html(convertMsToTime(counter));
+                            counter++;
+                        }, 1000);
+                    });
 
                 }
                 else {
+                    CloseTimeFrame(TTCode, keyboardClicks,mouseClicks);
+                    $(this).text("Start Tracking");
+                    $(this).addClass("btn-success");
+                    $(this).removeClass("btn-danger");
                     clearInterval(interval);
                 }
-
             });
             function convertMsToTime(seconds) {
                 let minutes = Math.floor(seconds / 60);
@@ -96,22 +141,27 @@
             function padTo2Digits(num) {
                 return num.toString().padStart(2, '0');
             }
-            function PostBeginTimeFrame() {
-                 $.ajax({
-                url: '@Url.Action("InviteDeveloper", "Developer")',
-                type: "post",
-                data: $(this).serialize()
-            }).done(function (data) {
-                    console.log("We are here")
-                    console.log(JSON.stringify(data));
-                    if (data.success) {
-                        window.location.href = '@Url.Action("Login","Account")';
-                    }
-                    else {
-                        alert(data.message);
-                    }
+            function PostBeginTimeFrame(projectcode,description) {
+                $.ajax({
+                    url: '@Url.Action("CreateTimeFrame", "Developer")',
+                    type: "post",
+                    data: { TTDescr: description, ProjectCode: projectcode }
+                }).done(function (data) {
+                    TTCode = parseInt(data.data);
                 });
-            }
+        }
+         function CloseTimeFrame(TTCode,keyHits,MouseClicks) {
+                $.ajax({
+                    url: '@Url.Action("StopTimeFrame", "Developer")',
+                    type: "post",
+                    data: { TTCode: TTCode, KeyHits: keyHits, mouseHits: MouseClicks }
+            }).done(function (data) {
+
+                });
+        }
+        $(document).keypress(function (event) {
+            keyboardClicks++;
+        });
     </script>
 
 } 

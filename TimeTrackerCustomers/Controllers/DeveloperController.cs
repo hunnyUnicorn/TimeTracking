@@ -66,23 +66,55 @@ namespace TimeTrackerCustomers.Controllers
                 if (result.RespStatus == 0)
                 {
                     reqResult.Success = true;
+                    reqResult.Data = result.Data1;
                 }
                 else
                 {
                     if (result.RespStatus == 1)
                     {
-                        // Danger(result.RespMessage);
+                        Danger(result.RespMessage);
                     }
                     else
                     {
-                        LogUtil.Error(logFile, "Client.CreateProject", new Exception(result.RespMessage));
-                        // Danger("Action failed due to a database error!");
+                        LogUtil.Error(logFile, "Developer.CreateTimeFrame", new Exception(result.RespMessage));
+                        Danger("Action failed due to a database error!");
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogUtil.Error(logFile, "Client.CreateProject()", ex);
+                LogUtil.Error(logFile, "Developer.CreateTimeFrame", ex);
+            }
+            return Json(reqResult);
+        }
+        [HttpPost]
+        public async Task<IActionResult> StopTimeFrame(int TTCode, int KeyHits, int mouseHits)
+        {
+            ReqResult reqResult = new ReqResult { Success = false };
+            try
+            {
+                var result = await bl.StopTimeFrame(TTCode,KeyHits,mouseHits);
+                reqResult.Message = result.RespMessage;
+                if (result.RespStatus == 0)
+                {
+                    reqResult.Success = true;
+                }
+                else
+                {
+                    if (result.RespStatus == 1)
+                    {
+                        Danger(result.RespMessage);
+                    }
+                    else
+                    {
+                        LogUtil.Error(logFile, "Developer.StopTimeFrame", new Exception(result.RespMessage));
+                        Danger("Action failed due to a database error!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.StopTimeFrame", ex);
             }
             return Json(reqResult);
         }

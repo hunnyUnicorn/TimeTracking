@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "sweetalert2@11.4.33",
+      "destination": "wwwroot/lib/sweetalert2/"
+    }
+  ]
+}
