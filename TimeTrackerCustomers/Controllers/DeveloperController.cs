@@ -46,7 +46,16 @@ namespace TimeTrackerCustomers.Controllers
         [HttpGet]
         public async Task<IActionResult> MyActivities()
         {
-            return View();
+            var model = new List<TimeTrack>();
+            try
+            {
+                model = (await bl.GetTimeTracksAsync(SessionDeveloperData.DevCode)).ToList();
+            }
+            catch(Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.MyActivities", ex);
+            }
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> WebTracker()

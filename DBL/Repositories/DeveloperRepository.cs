@@ -112,5 +112,15 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<BaseEntity>("Sp_CloseTimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
+        public async Task<IEnumerable<TimeTrack>> GetTimeTracks(int developercode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@DevCode", developercode);
+                return (await connection.QueryAsync<TimeTrack>("Sp_GetTimeTracks", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
     }
 }

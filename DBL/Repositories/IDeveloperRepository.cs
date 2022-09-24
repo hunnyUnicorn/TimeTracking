@@ -18,5 +18,6 @@ namespace DBL.Repositories
         Task<IEnumerable<screenshotdets>> GetScreenShots(int filterType, string value, int clientcode);
         Task<GenericModel> CreateTimeFrame(TimeTrack model);
         Task<BaseEntity> StopTimeFrame(int TTCode, int KeyHits, int mouseHits);
+        Task<IEnumerable<TimeTrack>> GetTimeTracks(int developercode);
     }
 }

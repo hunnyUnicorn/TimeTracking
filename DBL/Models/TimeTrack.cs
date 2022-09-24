@@ -14,5 +14,8 @@ namespace DBL.Models
         public int ProjectCode { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string ProjectName { get; set; }
+        public int KeyboardHits { get; set; }
+        public int MouseClicks { get; set; }
     }
 }

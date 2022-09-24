@@ -566,6 +566,10 @@ namespace DBL
         {
             return await db.DeveloperRepository.StopTimeFrame(TTCode,KeyHits,mouseHits);
         }
+        public async Task<IEnumerable<TimeTrack>> GetTimeTracksAsync(int devcode)
+        {
+            return await db.DeveloperRepository.GetTimeTracks(devcode);
+        }
         #endregion
         #region Common Actions
         public async Task<int> Login(UserLoginModel model)
