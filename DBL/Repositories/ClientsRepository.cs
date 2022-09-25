@@ -64,11 +64,8 @@ namespace DBL.Repositories
                 parameters.Add("@ProjectDescr", model.ProjectDescr);
                 parameters.Add("@ProjCat", model.ProjCatCode);
                 parameters.Add("@ProjRef", model.ProjRef);
-                parameters.Add("@Budget", model.Budget);
-                parameters.Add("@StartDate", model.StartDate);
-                parameters.Add("@EndDate", model.EndDate);
-                parameters.Add("@PriorityType", model.Priority);
-                parameters.Add("@NotifType", model.NotifType);
+                parameters.Add("@EndDate", model.ProjEndDate);
+                parameters.Add("@CCYCode", model.CCYCode);
                 return (await connection.QueryAsync<BaseEntity>("Sp_Create_Project", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
@@ -83,7 +80,7 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<Project>("Sp_Pull_Projects", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
-        public async Task<BaseEntity> InviteDeveloper(ProjectInviteModel model)
+        public async Task<GenericModel> InviteDeveloper(ProjectInviteModel model)
         {
             using (var connection = new SqlConnection(_connString))
             {
@@ -92,7 +89,7 @@ namespace DBL.Repositories
                 parameters.Add("@ClientCode", model.ClientCode);
                 parameters.Add("@ProjectCode", model.ProjectCode);
                 parameters.Add("@Email", model.Email);
-                return (await connection.QueryAsync<BaseEntity>("Sp_Add_Developer_To_Project", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+                return (await connection.QueryAsync<GenericModel>("Sp_Add_Developer_To_Project", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
         public async Task<Project> GetProject(int code)

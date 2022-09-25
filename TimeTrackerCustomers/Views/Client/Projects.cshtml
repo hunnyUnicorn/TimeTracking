@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Projects";
     Layout = "~/Views/Shared/_LayoutClients.cshtml";
+    var categories = ViewData["categories"] as List<SelectListItem>;
+    var Currencies = ViewData["Currencies"] as List<SelectListItem>;
+
 }
 
 <div class="body d-flex py-lg-3 py-md-2">
@@ -51,75 +54,25 @@
                     </div>
                     <div class="mb-3">
                         <label asp-for="ProjCatCode" class="form-label">Project Category</label>
-                        <select asp-for="ProjCatCode" class="form-select" aria-label="Default select Project Category">
-                            <option value="100">UI/UX Design</option>
-                            <option value="101">Website Design</option>
-                            <option value="102">App Development</option>
-                            <option value="103">Quality Assurance</option>
-                            <option value="104">Development</option>
-                            <option value="105">Backend Development</option>
-                            <option value="106">Software Testing</option>
-                            <option value="107">Website Design</option>
-                            <option value="108">Marketing</option>
-                            <option value="109">SEO</option>
-                            <option value="110">Other</option>
-
+                        <select asp-for="ProjCatCode" asp-items="categories" class="form-select" aria-label="Default select Project Category">
+                            <option>SELECT CATEGORY</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="formFileMultipleone" class="form-label">Project Images & Document</label>
-                        <input class="form-control" type="file" id="formFileMultipleone" multiple>
+                        <label asp-for="CCYCode" class="form-label">Project Category</label>
+                        <select asp-for="CCYCode" asp-items="Currencies" class="form-select" aria-label="Default select Currency">
+                            <option>SELECT CURRENCY</option>
+                        </select>
                     </div>
                     <div class="deadline-form">
 
                         <div class="row g-3 mb-3">
                             <div class="col">
-                                <label asp-for="StartDate" for="datepickerded" class="form-label">Project Start Date</label>
-                                <input type="date" asp-for="StartDate" class="form-control" id="datepickerded">
-                            </div>
-                            <div class="col">
-                                <label asp-for="EndDate" for="datepickerdedone" class="form-label">Project End Date</label>
-                                <input asp-for="EndDate" type="date" class="form-control" id="datepickerdedone">
-                            </div>
-                        </div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-sm-12">
-                                <label asp-for="NotifType" class="form-label">Notifation Sent</label>
-                                <select asp-for="NotifType" class="form-select" aria-label="Default select example">
-                                    <option selected>All</option>
-                                    <option value="100">Team Leader Only</option>
-                                    <option value="101">Team Member Only</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-12">
-                                <label for="formFileMultipleone" class="form-label">Task Assign Person</label>
-                                <select class="form-select" multiple aria-label="Default select Priority">
-                                    <option selected>Lucinda Massey</option>
-                                    <option value="1">Ryan Nolan</option>
-                                    <option value="2">Oliver Black</option>
-                                    <option value="3">Adam Walker</option>
-                                    <option value="4">Brian Skinner</option>
-                                    <option value="5">Dan Short</option>
-                                    <option value="5">Jack Glover</option>
-                                </select>
+                                <label asp-for="ProjEndDate" for="datepickerdedone" class="form-label">Project End Date</label>
+                                <input asp-for="ProjEndDate" type="date" class="form-control" id="datepickerdedone">
                             </div>
                         </div>
 
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-sm">
-                            <label asp-for="Budget" for="formFileMultipleone" class="form-label">Budget</label>
-                            <input asp-for="Budget" class="form-control">
-                        </div>
-                        <div class="col-sm">
-                            <label asp-for="Priority" for="formFileMultipleone" class="form-label">Priority</label>
-                            <select asp-for="Priority" class="form-select" aria-label="Default select Priority">
-                                <option value="100">Highest</option>
-                                <option value="101">Medium</option>
-                                <option value="102">Low</option>
-                                <option value="103">Lowest</option>
-                            </select>
-                        </div>
                     </div>
                     <div class="mb-3">
                         <label asp-for="ProjectDescr" for="exampleFormControlTextarea78" class="form-label">Description (optional)</label>
@@ -183,14 +136,7 @@
                 type: "post",
                 data: $(this).serialize()
             }).done(function (data) {
-                    console.log("We are here")
-                    console.log(JSON.stringify(data));
-                    if (data.success) {
-                        window.location.href = '@Url.Action("Login","Account")';
-                    }
-                    else {
-                        alert(data.message);
-                    }
+                window.location.reload();
                 });
         });
 

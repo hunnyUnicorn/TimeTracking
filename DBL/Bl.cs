@@ -743,9 +743,15 @@ namespace DBL
         {
             return await db.ClientsRepository.Projects(clientcode,status);
         }
-        public async Task<BaseEntity> InviteDeveloper(ProjectInviteModel project)
+        public async Task<GenericModel> InviteDeveloper(ProjectInviteModel project)
         {
-            return await db.ClientsRepository.InviteDeveloper(project);
+            var InviteResp =  await db.ClientsRepository.InviteDeveloper(project);
+            if(InviteResp.Data1=="10")
+            {
+                int port = Convert.ToInt32(InviteResp.Data5);
+                SendMail(InviteResp.Data4, port, InviteResp.Data6 == "1", InviteResp.Data7, InviteResp.Data8, InviteResp.Data3, InviteResp.Data9, InviteResp.Data2);
+            }
+            return InviteResp;
         }
         public async Task<Project> GetProjectByCode(int code)
         {

@@ -16,7 +16,7 @@ namespace DBL.Repositories
         #region projects
         Task<BaseEntity> CreateProject(Project model);
         Task<IEnumerable<Project>> Projects(int clientCode, int status);
-        Task<BaseEntity> InviteDeveloper(ProjectInviteModel model);
+        Task<GenericModel> InviteDeveloper(ProjectInviteModel model);
         Task<Project> GetProject(int code);
         Task<IEnumerable<Developer>> DevelopersPerProject(int projectcode);
         Task<IEnumerable<screenshotdets>> GetScreenShotsPerClient(int filterType, string value, int clientcode);

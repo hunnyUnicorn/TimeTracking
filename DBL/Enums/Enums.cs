@@ -12,7 +12,9 @@ namespace DBL.Enums
 
     public enum ListItemType
     {
-        ProjectDevelopers = 0
+        ProjectDevelopers = 0,
+        ProjectCategories = 1,
+        Currencies = 2
     }
 
     public enum ReportsMode

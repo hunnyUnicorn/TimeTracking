@@ -38,6 +38,10 @@ namespace DBL.Entities
         [Required()]
         [Display(Name = "Project Category")]
         public int ProjCatCode { get; set; }
+        [Column("CCYCode")]
+        [Required()]
+        [Display(Name = "Currency")]
+        public int CCYCode { get; set; }
 
         [Column("ClientCode")]
         public int ClientCode { get; set; }
@@ -50,34 +54,22 @@ namespace DBL.Entities
         [Required()]
         public string ProjRef { get; set; }
 
-        [Column("StartDate")]
+        [Column("ProjStartDate")]
         [Required()]
         [Display(Name = "Project Start")]
-        public DateTime StartDate { get; set; }
+        public DateTime ProjStartDate { get; set; }
 
-        [Column("EndDate")]
+        [Column("ProjEndDate")]
         [Required()]
         [Display(Name = "Project End")]
-        public DateTime EndDate { get; set; }
-
-        [Column("NotifType")]
-        [Required()]
-        [Display(Name = "Notification Type")]
-        public int NotifType { get; set; }
-
-
-        [Column("Budget")]
-        [Required()]
-        [Display(Name = "Budget")]
-        public decimal Budget { get; set; }
-
-        [Column("Priority")]
-        [Required()]
-        [Display(Name = "Priority")]
-        public int Priority { get; set; }
+        public DateTime ProjEndDate { get; set; }
 
         [NotMapped]
         public string CategoryName { get; set; }
+        [NotMapped]
+        public int Members { get; set; }
+        [NotMapped]
+        public string CCYName { get; set; }
     }
 
     public class ProjectInviteModel

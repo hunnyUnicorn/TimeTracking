@@ -31,6 +31,7 @@ namespace TimeTrackerCustomers.Controllers
         [HttpGet]
         public async Task<IActionResult>Projects()
         {
+            await LoadProjectItems();
             return View();
         }
         [HttpGet]
@@ -165,6 +166,23 @@ namespace TimeTrackerCustomers.Controllers
             }).ToList();
 
             ViewData["Developers"] = list;
+        }
+        private async Task LoadProjectItems(int role = 0)
+        {
+            var list = (await bl.GetItemListAsync(ListItemType.ProjectCategories, role)).Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value
+            }).ToList();
+
+            ViewData["categories"] = list;
+            list = (await bl.GetItemListAsync(ListItemType.Currencies, role)).Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value
+            }).ToList();
+
+            ViewData["Currencies"] = list;
         }
     }
 }
