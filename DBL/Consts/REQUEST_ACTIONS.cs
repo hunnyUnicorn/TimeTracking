@@ -12,6 +12,8 @@ namespace DBL.Consts
         public const int LOGIN = 101;
         public const int GET_PROJECTS = 102;
         public const int POST_SCREENSHOT = 103;
+        public const int START_TIMEFRAME = 104;
+        public const int STOP_TIMEFRAME = 105;
     }
     public class CLIENT_ACTIONS
     {

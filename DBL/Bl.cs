@@ -390,6 +390,28 @@ namespace DBL
                     resp.Message = screenshotResp.RespMessage;
                     #endregion
                     break;
+                case DEVELOPER_ACTIONS.START_TIMEFRAME:
+                    #region START TIMEFRAME
+                    var timetrack = new TimeTrack
+                    {
+                        DevCode = dynamicObject.DevCode,
+                        ProjectCode = dynamicObject.ProjCode,
+                        TTDescr=dynamicObject.descr
+                    };
+                    var startttResp = await db.DeveloperRepository.CreateTimeFrame(timetrack);
+                    resp.Data = startttResp.Data1;
+                    resp.RespStatus = startttResp.RespStatus;
+                    resp.Message = startttResp.RespMessage;
+                    #endregion
+                    break;
+                case DEVELOPER_ACTIONS.STOP_TIMEFRAME:
+                    #region STOP TIMEFRAME
+                    int TTCode = dynamicObject.TTCode;
+                    int keyboardHits = dynamicObject.KeyHits;
+                    int mouseHits = dynamicObject.mouseHits;
+                    var stopResp = await db.DeveloperRepository.StopTimeFrame(TTCode, keyboardHits, mouseHits);
+                    #endregion
+                    break;
             }
 
             return resp;
