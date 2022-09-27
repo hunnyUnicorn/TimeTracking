@@ -67,6 +67,26 @@ namespace TimeTrackerCustomers
             var userObject = JsonConvert.DeserializeObject<Client>(userData);
             return userObject ?? new Client(); ;
         }
+        public static string FormatDateDifference(int milliseconds)
+        {
+            if(milliseconds> 8.64e+7)
+            {
+                return String.Format("{0}days ago", (milliseconds / 8.64e+7));
+            }
+            if (milliseconds > 3.6e+6)
+            {
+                return String.Format("{0} hours ago", (milliseconds / 3.6e+6));
+            }
+            if (milliseconds > 60000)
+            {
+                return String.Format("{0} minutes ago", (milliseconds / 60000));
+            }
+            if (milliseconds > 10000)
+            {
+                return String.Format("{0} seconds ago", (milliseconds / 10000));
+            }
+            return "";
+        }
     }
 
     public class Alert

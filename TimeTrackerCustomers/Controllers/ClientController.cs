@@ -91,18 +91,19 @@ namespace TimeTrackerCustomers.Controllers
                 {
                     if (result.RespStatus == 1)
                     {
-                        // Danger(result.RespMessage);
+                        Danger(result.RespMessage);
                     }
                     else
                     {
                         LogUtil.Error(logFile, "Client.InviteDeveloper", new Exception(result.RespMessage));
-                        // Danger("Action failed due to a database error!");
+                        Danger("Action failed due to a database error!");
                     }
                 }
             }
             catch (Exception ex)
             {
                 LogUtil.Error(logFile, "Client.InviteDeveloper()", ex);
+                Danger("Action failed due to a database error!");
             }
             return Json(reqResult);
         }

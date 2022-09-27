@@ -93,5 +93,14 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<GenericModel>("Sp_Update_VCode_Dets", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
+        public async Task<IEnumerable<Notification>> GetNotifications(int custcode,USER_TYPE usertype)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                string sql = "select * from Notifications where custcode =" + custcode + " and usertype="+(int)usertype+" order by NotifCode desc";
+                connection.Open();
+                return (await connection.QueryAsync<Notification>(sql)).ToList();
+            }
+        }
     }
 }

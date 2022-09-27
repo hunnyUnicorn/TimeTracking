@@ -636,6 +636,10 @@ namespace DBL
         {
             return await db.GeneralRepository.GetItemListAsync(itemType, code);
         }
+        public async Task<IEnumerable<Notification>> GetNotificationsAsync(int custcode,USER_TYPE userType)
+        {
+            return await db.GeneralRepository.GetNotifications(custcode, userType);
+        }
         #endregion
         #region Client Actions
         public async Task<Client> VerifyClient(UserLoginModel model)
