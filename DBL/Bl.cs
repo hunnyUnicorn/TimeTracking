@@ -377,7 +377,8 @@ namespace DBL
                     var screenshot = new Screenshot {
                         base64String = dynamicObject.base64String,
                         DevCode = dynamicObject.DevCode,
-                        ProjCode = dynamicObject.ProjCode
+                        ProjCode = dynamicObject.ProjCode,
+                        TTCode = dynamicObject.TTCode
                     };
 ;
                     screenshot.ScrName = Guid.NewGuid().ToString();
@@ -588,6 +589,14 @@ namespace DBL
         {
             return await db.DeveloperRepository.StopTimeFrame(TTCode,KeyHits,mouseHits);
         }
+        public async Task<ProjectInvite> GetProjectInviteAsync(int InviteCode)
+        {
+            return await db.DeveloperRepository.ProjectInvite(InviteCode);
+        }
+        public async Task<IEnumerable<ProjectInvite>> GetProjectInvitesAsync(int DevCode)
+        {
+            return await db.DeveloperRepository.ProjectInvites(DevCode);
+        }
         public async Task<IEnumerable<TimeTrack>> GetTimeTracksAsync(int devcode)
         {
             return await db.DeveloperRepository.GetTimeTracks(devcode);
@@ -639,6 +648,46 @@ namespace DBL
         public async Task<IEnumerable<Notification>> GetNotificationsAsync(int custcode,USER_TYPE userType)
         {
             return await db.GeneralRepository.GetNotifications(custcode, userType);
+        }
+        public async Task<BaseEntity> Invite_Action(int InviteAction, int DevCode, int InviteCode, string RejectReason)
+        {
+            return await db.DeveloperRepository.Invite_Action(InviteAction,DevCode,InviteCode,RejectReason);
+        }
+        public async Task<BaseEntity> ResetPasswordLink(PasswodResetModel model)
+        {
+            model.ResetLinkIdentifier = Guid.NewGuid().ToString();
+            var resp = await db.GeneralRepository.GenerateResetLink(model);
+            if(resp.RespStatus == 0 )
+            {
+                int port = Convert.ToInt32(resp.Data5);
+                SendMail(resp.Data4, port, resp.Data6 == "1", resp.Data7, resp.Data8, resp.Data3, resp.Data9, resp.Data2);
+                return new BaseEntity
+                {
+                    RespStatus = resp.RespStatus,
+                    RespMessage = resp.RespMessage
+                };
+            }
+            else
+            {
+                return new BaseEntity
+                {
+                    RespStatus = resp.RespStatus,
+                    RespMessage = resp.RespMessage
+                };
+            }
+        }
+        public async Task<BaseEntity> ValidateLink(string id)
+        {
+            return await db.GeneralRepository.ValidateLink(id);
+        }
+        public async Task<BaseEntity> ResetPassword(PasswodResetModel model)
+        {
+            TSSecurity security = new TSSecurity();
+            model.salt = security.GenerateSalt(25);
+            string rawPass = model.Password;
+            string password = security.HashPassword(rawPass, model.salt);
+            model.pwd = password;
+            return await db.GeneralRepository.ResetPassword(model);
         }
         #endregion
         #region Client Actions

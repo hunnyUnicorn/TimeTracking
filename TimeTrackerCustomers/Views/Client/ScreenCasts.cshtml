@@ -52,6 +52,10 @@
                    data: { filter:0,value:0}
             }).done(function (data) {
                 $('#screencastlist').html(data);
+                    $('#aniimated-thumbnials').lightGallery({
+                        thumbnail: true,
+                        selector: 'a'
+                    });
             });
 
                var today = new Date().toISOString().split('T')[0];
@@ -66,6 +70,10 @@
                  data: { filter: 2, value: value }
             }).done(function (data) {
                 $('#screencastlist').html(data);
+                $('#aniimated-thumbnials').lightGallery({
+                    thumbnail: true,
+                    selector: 'a'
+                });
                 });
         });
         $('#datePicker').on('input', function (e) {
@@ -77,6 +85,10 @@
                  data: { filter: 3, value: val }
             }).done(function (data) {
                 $('#screencastlist').html(data);
+                $('#aniimated-thumbnials').lightGallery({
+                    thumbnail: true,
+                    selector: 'a'
+                });
                 });
         });
         $('#Developers').change(function () {
@@ -87,6 +99,10 @@
                  data: { filter: 4, value: selected }
             }).done(function (data) {
                 $('#screencastlist').html(data);
+                $('#aniimated-thumbnials').lightGallery({
+                    thumbnail: true,
+                    selector: 'a'
+                });
                 });
             });
     </script>

@@ -127,5 +127,77 @@ namespace TimeTrackerCustomers.Controllers
             }
             return Json(reqResult);
         }
+        [HttpGet]
+        public async Task<IActionResult> ProjectInvites()
+        {
+            var model = new List<ProjectInvite>();
+            try
+            {
+                model = (await bl.GetProjectInvitesAsync(SessionDeveloperData.DevCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                Danger("Error occured when getting the project invite");
+                LogUtil.Error(logFile, "Developer.StopTimeFrame", ex);
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ProjectInviteAction(int ProjectCode)
+        {
+            var model = new ProjectInvite();
+            try
+            {
+                model = await bl.GetProjectInviteAsync(ProjectCode);
+                if(model.RespStatus == 1)
+                {
+                    Danger(model.RespMessage);
+                    return RedirectToAction("ProjectInvites");
+                }
+            }
+            catch(Exception ex)
+            {
+                Danger("Error occured when getting the project invite");
+                LogUtil.Error(logFile, "Developer.StopTimeFrame", ex);
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> InviteTakeAction(int action, int invitecode, string reason)
+        {
+            ReqResult reqResult = new ReqResult { Success = false };
+            try
+            {
+                var result = await bl.Invite_Action(action, SessionDeveloperData.DevCode, invitecode, reason);
+                if (result.RespStatus == 0)
+                {
+                    Success(result.RespMessage);
+                    reqResult.Success = true;
+                }
+                else if (result.RespStatus == -1) //failed posting
+                {
+                    Danger(result.RespMessage);
+                    reqResult.Success = true;
+                }
+                else
+                {
+                    if (result.RespStatus == 1)
+                    {
+                        Danger(result.RespMessage);
+                    }
+                    else
+                    {
+                        LogUtil.Error(logFile, "Developer.InviteTakeAction", new Exception(result.RespMessage));
+                        Danger("Action failed due to a database error!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.InviteTakeAction", ex);
+                Danger("Action failed due to an error!");
+            }
+            return Json(reqResult);
+        }
     }
 }

@@ -19,5 +19,8 @@ namespace DBL.Repositories
         Task<GenericModel> CreateTimeFrame(TimeTrack model);
         Task<BaseEntity> StopTimeFrame(int TTCode, int KeyHits, int mouseHits);
         Task<IEnumerable<TimeTrack>> GetTimeTracks(int developercode);
+        Task<ProjectInvite> ProjectInvite(int InviteCode);
+        Task<IEnumerable<ProjectInvite>> ProjectInvites(int DeveloperCode);
+        Task<BaseEntity> Invite_Action(int InviteAction, int DevCode, int InviteCode, string RejectReason);
     }
 }

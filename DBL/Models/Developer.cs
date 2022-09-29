@@ -27,6 +27,8 @@ namespace DBL.Models
         public string RawPass { get; set; }
         [JsonIgnore]
         public string UserIdentifier { get; set; }
+        public int InviteStatus { get; set; }
+        public string RejectReason { get; set; }
     }
     public class DevLogin
     {

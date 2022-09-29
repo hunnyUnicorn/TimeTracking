@@ -73,6 +73,7 @@ namespace DBL.Repositories
                 parameters.Add("@ScrName", model.ScrName);
                 parameters.Add("@DevCode", model.DevCode);
                 parameters.Add("@ProjCode", model.ProjCode);
+                parameters.Add("@TTCode", model.TTCode);
                 return (await connection.QueryAsync<BaseEntity>("Sp_Screenshot", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
@@ -120,6 +121,39 @@ namespace DBL.Repositories
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@DevCode", developercode);
                 return (await connection.QueryAsync<TimeTrack>("Sp_GetTimeTracks", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
+        public async Task<ProjectInvite> ProjectInvite(int InviteCode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@InviteCode", InviteCode);
+                return (await connection.QueryAsync<ProjectInvite>("Sp_Project_Invite", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<IEnumerable<ProjectInvite>> ProjectInvites(int DeveloperCode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@DevCode", DeveloperCode);
+                return (await connection.QueryAsync<ProjectInvite>("Sp_Project_Invites", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
+        public async Task<BaseEntity> Invite_Action(int InviteAction, int DevCode, int InviteCode,string RejectReason)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@InviteAction", InviteAction);
+                parameters.Add("@DevCode", DevCode);
+                parameters.Add("@InviteCode", InviteCode);
+                parameters.Add("@RejectReason", RejectReason);
+                return (await connection.QueryAsync<BaseEntity>("Sp_Invite_Action", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
     }

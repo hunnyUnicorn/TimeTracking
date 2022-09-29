@@ -102,5 +102,44 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<Notification>(sql)).ToList();
             }
         }
+        public async Task<GenericModel> GenerateResetLink(PasswodResetModel model)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@linkid", model.ResetLinkIdentifier);
+                parameters.Add("@email", model.Email);
+
+                return (await connection.QueryAsync<GenericModel>("Sp_Gen_Reset_Link", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<BaseEntity> ValidateLink(string id)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@linkid", id);
+
+                return (await connection.QueryAsync<BaseEntity>("Sp_Validate_Link", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<BaseEntity> ResetPassword(PasswodResetModel model)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@LinkId", model.ResetLinkIdentifier);
+                parameters.Add("@Password", model.pwd);
+                parameters.Add("@Salt", model.salt);
+
+                return (await connection.QueryAsync<BaseEntity>("Sp_Reset_Password_Customers", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
     }
 }

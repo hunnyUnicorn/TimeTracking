@@ -14,6 +14,7 @@ namespace DBL.Models
         public int ProjCode { get; set; }
         public DateTime ScrDate { get; set; }
         public string base64String { get; set; }
+        public int TTCode { get; set; }
     }
     public class screenshotdets
     {

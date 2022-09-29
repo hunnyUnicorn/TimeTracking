@@ -157,26 +157,6 @@ namespace TimeTrackerCustomers.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ForgotPass(string returnUrl = null)
-        {
-            Warning("Under Development");
-            return RedirectToAction("Login");
-            //ViewData["ReturnUrl"] = returnUrl;
-            //return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPass(ResetPassModel model, string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View(model);
-        }
-
-
-        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -230,6 +210,99 @@ namespace TimeTrackerCustomers.Controllers
                 IsPersistent = rememberMe,
                 ExpiresUtc = new DateTimeOffset?(DateTime.UtcNow.AddMinutes(30))
             });
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(PasswodResetModel model)
+        {
+            try
+            {
+                var resp = await bl.ResetPasswordLink(model);
+                if(resp.RespStatus==0)
+                {
+                    Success(resp.RespMessage);
+                    return RedirectToAction("Login", "Account");
+                }
+                else if(resp.RespStatus==1)
+                {
+                    Danger(resp.RespMessage);
+                }
+                else
+                {
+                    LogUtil.Error(logFile, "Account.ForgotPassword", new Exception(resp.RespMessage));
+                    Danger("Database Error occured when executing your request");
+                }
+            }
+            catch(Exception ex)
+            {
+                LogUtil.Error(logFile, "Account.ForgotPassword", ex);
+                Danger("Technical error occured when executing your request");
+            }
+            return View(model);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(string id)
+        {
+            var validateResp = await bl.ValidateLink(id);
+            var model = new PasswodResetModel();
+            model.ResetLinkIdentifier = id;
+            if (validateResp.RespStatus==0)
+            {
+                return View(model);
+            }
+            else if (validateResp.RespStatus == 1)
+            {
+                Danger(validateResp.RespMessage);
+            }
+            else
+            {
+                LogUtil.Error(logFile, "Account.ForgotPassword", new Exception(validateResp.RespMessage));
+                Danger("Database Error occured when executing your request");
+            }
+            return RedirectToAction("Login", "Account");
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(PasswodResetModel model)
+        {
+            try
+            {
+                if(!model.Password.Equals(model.ConfirmPassword))
+                {
+                    Danger("Password should be the same as confirmation password");
+                    return View(model);
+                }
+                var resp = await bl.ResetPassword(model);
+                if (resp.RespStatus == 0)
+                {
+                    Success(resp.RespMessage);
+                    return RedirectToAction("Login", "Account");
+                }
+                else if (resp.RespStatus == 1)
+                {
+                    Danger(resp.RespMessage);
+                }
+                else
+                {
+                    LogUtil.Error(logFile, "Account.ResetPassword", new Exception(resp.RespMessage));
+                    Danger("Database Error occured when executing your request");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Account.ResetPassword", ex);
+                Danger("Technical error occured when executing your request");
+            }
+            return View(model);
         }
         #region Helpers
 
