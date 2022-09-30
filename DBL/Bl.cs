@@ -397,7 +397,8 @@ namespace DBL
                     {
                         DevCode = dynamicObject.DevCode,
                         ProjectCode = dynamicObject.ProjCode,
-                        TTDescr=dynamicObject.descr
+                        TTDescr=dynamicObject.descr,
+                        BeginDate = dynamicObject.BeginDate
                     };
                     var startttResp = await db.DeveloperRepository.CreateTimeFrame(timetrack);
                     resp.Data = startttResp.Data1;
@@ -805,9 +806,9 @@ namespace DBL
             }
             return result;
         }
-        public async Task<IEnumerable<screenshotdets>> GetDeveloperScreenShots(int filter,string value,int clientcode)
+        public async Task<IEnumerable<screenshotdets>> GetDeveloperScreenShots(int filter,string value,int devcode)
         {
-            return await db.DeveloperRepository.GetScreenShots(filter,value,clientcode);
+            return await db.DeveloperRepository.GetScreenShots(filter,value,devcode);
         }
         #region projects
         public async Task<BaseEntity> CreateProject(Project project)

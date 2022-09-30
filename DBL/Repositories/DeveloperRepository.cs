@@ -98,6 +98,7 @@ namespace DBL.Repositories
                 parameters.Add("@TTDescr", model.TTDescr);
                 parameters.Add("@DevCode", model.DevCode);
                 parameters.Add("@ProjCode", model.ProjectCode);
+                parameters.Add("@StartDate", model.BeginDate);
                 return (await connection.QueryAsync<GenericModel>("Sp_Add_TimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }

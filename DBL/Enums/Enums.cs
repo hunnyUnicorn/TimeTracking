@@ -14,7 +14,8 @@ namespace DBL.Enums
     {
         ProjectDevelopers = 0,
         ProjectCategories = 1,
-        Currencies = 2
+        Currencies = 2,
+        DeveloperProjects = 3
     }
 
     public enum ReportsMode

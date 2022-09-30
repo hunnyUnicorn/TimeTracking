@@ -1,10 +1,12 @@
 ﻿using DBL;
 using DBL.Entities;
+using DBL.Enums;
 using DBL.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 
 namespace TimeTrackerCustomers.Controllers
@@ -198,6 +200,45 @@ namespace TimeTrackerCustomers.Controllers
                 Danger("Action failed due to an error!");
             }
             return Json(reqResult);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ScreenCasts()
+        {
+            var model = new List<screenshotdets>();
+            try
+            {
+                await LoadScreenCastFilterItems(SessionDeveloperData.DevCode);
+                model = (await bl.GetDeveloperScreenShots(0, "0", SessionDeveloperData.DevCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Client.GetProject()", ex);
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ScreenCastList(int filter, string value)
+        {
+            var model = new List<screenshotdets>();
+            try
+            {
+                model = (await bl.GetDeveloperScreenShots(filter, value, SessionDeveloperData.DevCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.ScreenCastList()", ex);
+            }
+            return PartialView("_ScreenCastList", model);
+        }
+        private async Task LoadScreenCastFilterItems(int role = 0)
+        {
+            var list = (await bl.GetItemListAsync(ListItemType.DeveloperProjects, role)).Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value
+            }).ToList();
+
+            ViewData["Projects"] = list;
         }
     }
 }
