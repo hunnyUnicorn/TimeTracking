@@ -9,6 +9,7 @@ using DBL.Consts;
 using DBL.Enums;
 using System.Net.Mail;
 using System.Net;
+using System.Globalization;
 
 namespace DBL
 {
@@ -393,12 +394,14 @@ namespace DBL
                     break;
                 case DEVELOPER_ACTIONS.START_TIMEFRAME:
                     #region START TIMEFRAME
+                    string date = dynamicObject.BeginDate;
+                    var startDate= DateTime.ParseExact(date, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                     var timetrack = new TimeTrack
                     {
                         DevCode = dynamicObject.DevCode,
                         ProjectCode = dynamicObject.ProjCode,
                         TTDescr=dynamicObject.descr,
-                        BeginDate = dynamicObject.BeginDate
+                        BeginDate = startDate
                     };
                     var startttResp = await db.DeveloperRepository.CreateTimeFrame(timetrack);
                     resp.Data = startttResp.Data1;
@@ -408,10 +411,12 @@ namespace DBL
                     break;
                 case DEVELOPER_ACTIONS.STOP_TIMEFRAME:
                     #region STOP TIMEFRAME
+                    string closeDateStr = dynamicObject.closeDate;
+                    var closeDate = DateTime.ParseExact(closeDateStr, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                     int TTCode = dynamicObject.TTCode;
                     int keyboardHits = dynamicObject.KeyHits;
                     int mouseHits = dynamicObject.mouseHits;
-                    var stopResp = await db.DeveloperRepository.StopTimeFrame(TTCode, keyboardHits, mouseHits);
+                    var stopResp = await db.DeveloperRepository.StopTimeFrame(TTCode, keyboardHits, mouseHits, closeDate);
                     #endregion
                     break;
             }
@@ -588,7 +593,7 @@ namespace DBL
         }
         public async Task<BaseEntity> StopTimeFrame(int TTCode, int KeyHits, int mouseHits)
         {
-            return await db.DeveloperRepository.StopTimeFrame(TTCode,KeyHits,mouseHits);
+            return await db.DeveloperRepository.StopTimeFrame(TTCode,KeyHits,mouseHits,DateTime.Now);
         }
         public async Task<ProjectInvite> GetProjectInviteAsync(int InviteCode)
         {

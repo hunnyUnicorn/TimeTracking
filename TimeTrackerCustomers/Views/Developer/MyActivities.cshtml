@@ -21,40 +21,39 @@
                 <div class="card">
                     <div class="card-body">
                         <div id="timetracker-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                            <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="timetracker-table_length"><label>Show <select name="timetracker-table_length" aria-controls="timetracker-table" class="form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="timetracker-table_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="timetracker-table"></label></div></div></div><div class="row">
                                 <div class="col-sm-12">
                                     <table id="timetracker-table" class="table table-hover custom-table align-middle mb-0 nowrap dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="timetracker-table_info">
                                         <thead>
                                             <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 94px;" aria-sort="ascending" aria-label="Project: activate to sort column descending">Project</th>
-                                            <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 92px;" aria-label="Start Time: activate to sort column ascending">Start Time</th>
-                                            <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 92px;" aria-label="End Time: activate to sort column ascending">End Time</th>
-                                            <th class="dt-body-right sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 53px;" aria-label="Worked: activate to sort column ascending">Worked</th>
-                                            <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 116px;" aria-label="Task Detail: activate to sort column ascending">Task Detail</th>
-                                            <th class="dt-body-right sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 67px;" aria-label="Action: activate to sort column ascending">Action</th></tr>
+                                                <th class="sorting_asc" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 94px;" aria-sort="ascending" aria-label="Project: activate to sort column descending">Project</th>
+                                                <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 92px;" aria-label="Start Time: activate to sort column ascending">Start Time</th>
+                                                <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 92px;" aria-label="End Time: activate to sort column ascending">End Time</th>
+                                                <th class="dt-body-right sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 53px;" aria-label="Worked: activate to sort column ascending">Worked</th>
+                                                <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 116px;" aria-label="Task Detail: activate to sort column ascending">Task Detail</th>
+                                                <th class="dt-body-right sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 67px;" aria-label="Action: activate to sort column ascending">Action</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
 
                                             @foreach (var track in Model)
                                             {
-                                                <tr role="row" class="odd">
-                                                    <td class=" dt-body-right"><strong>@track.ProjectName</strong></td>
-                                                    <td>@track.BeginDate.ToString("HH:mm:ss")</td>
-                                                    <td>@track.EndDate.ToString("HH:mm:ss")</td>
-                                                    <td class=" dt-body-right"><strong>@string.Format("{0:%h}h, {0:%m}m, {0:%s}s", (track.EndDate - track.BeginDate))</strong></td>
-                                                    <td>@track.TTDescr</td>
-                                                    <td class=" dt-body-right">
-                                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                            <button type="button" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i></button>
-                                                            <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-close-line-squared-alt text-danger"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <tr role="row" class="odd">
+                                                <td class=" dt-body-right"><strong>@track.ProjectName</strong></td>
+                                                <td>@track.BeginDate.ToString("HH:mm:ss")</td>
+                                                <td>@track.EndDate.ToString("HH:mm:ss")</td>
+                                                <td class=" dt-body-right"><strong>@string.Format("{0:%h}h, {0:%m}m, {0:%s}s", (track.EndDate - track.BeginDate))</strong></td>
+                                                <td>@track.TTDescr</td>
+                                                <td class=" dt-body-right">
+                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                        <button type="button" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i></button>
+                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-close-line-squared-alt text-danger"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
                                 </div>
-                            </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="timetracker-table_info" role="status" aria-live="polite">Showing 1 to 5 of 5 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="timetracker-table_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="timetracker-table_previous"><a href="#" aria-controls="timetracker-table" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="timetracker-table" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="timetracker-table_next"><a href="#" aria-controls="timetracker-table" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
                         </div>
                     </div>
                 </div>
@@ -62,3 +61,30 @@
         </div>
     </div>
 </div>
+@section css{
+    <link rel="stylesheet" href="~/plugin/datatables/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/plugin/datatables/dataTables.bootstrap5.min.css">
+}
+@section Scripts{
+    <script src="~/bundles/dataTables.bundle.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#timetracker-table').addClass('nowrap').dataTable({
+                responsive: true,
+                columnDefs: [
+                    { targets: [-1, -3], className: 'dt-body-right' }
+                ]
+            });
+            $('.deleterow').on('click', function () {
+                var tablename = $(this).closest('table').DataTable();
+                tablename
+                    .row($(this)
+                        .parents('tr'))
+                    .remove()
+                    .draw();
+
+            });
+        });
+    </script>
+
+}

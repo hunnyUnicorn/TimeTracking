@@ -102,7 +102,7 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<GenericModel>("Sp_Add_TimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
-        public async Task<BaseEntity> StopTimeFrame(int TTCode,int KeyHits,int mouseHits)
+        public async Task<BaseEntity> StopTimeFrame(int TTCode,int KeyHits,int mouseHits,DateTime closeDate)
         {
             using (var connection = new SqlConnection(_connString))
             {
@@ -111,6 +111,7 @@ namespace DBL.Repositories
                 parameters.Add("@TimeTrackCode", TTCode);
                 parameters.Add("@KeyboardHits", KeyHits);
                 parameters.Add("@MouseClicks", mouseHits);
+                parameters.Add("@CloseDate", closeDate);
                 return (await connection.QueryAsync<BaseEntity>("Sp_CloseTimeTrack", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }

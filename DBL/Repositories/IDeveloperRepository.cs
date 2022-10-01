@@ -17,7 +17,7 @@ namespace DBL.Repositories
         Task<BaseEntity> RecordScreenshot(Screenshot model);
         Task<IEnumerable<screenshotdets>> GetScreenShots(int filterType, string value, int clientcode);
         Task<GenericModel> CreateTimeFrame(TimeTrack model);
-        Task<BaseEntity> StopTimeFrame(int TTCode, int KeyHits, int mouseHits);
+        Task<BaseEntity> StopTimeFrame(int TTCode, int KeyHits, int mouseHits, DateTime closeDate);
         Task<IEnumerable<TimeTrack>> GetTimeTracks(int developercode);
         Task<ProjectInvite> ProjectInvite(int InviteCode);
         Task<IEnumerable<ProjectInvite>> ProjectInvites(int DeveloperCode);
