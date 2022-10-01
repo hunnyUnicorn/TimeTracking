@@ -383,40 +383,52 @@
                         </div>
                     </div>
                     <div class="card-body" id="aniimated-thumbnials">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 row-cols-xl-6 row-cols-xxl-6 g-3">
-                            @foreach (var screenShot in ScreenCasts)
-                            {
-                                <div class="col">
-                                    <div class="screen-card shadow-sm p-2">
-                                        <a href="@String.Format("/ScreenCasts/{0}.png",@screenShot.ScrName)">
-                                            <img class="img-fluid img-thumbnail" src="@String.Format("/ScreenCasts/{0}.png",@screenShot.ScrName)" alt="">
-                                        </a>
-                                        <div class="user-profile d-flex align-items-center mt-3">
-                                            <img class="avatar rounded-circle" src="~/images/profile_av.svg" alt="profile">
-                                            <div class="u-info ms-2">
-                                                <span class="fw-bold">@screenShot.DeveloperName</span><br>
-                                                <span class="fw-bold text-success">@screenShot.ProjName</span><br>
-                                                @*<span class="text-muted">@screenShot.TimeTaken.ToString("hh:mm tt").ToUpper()</span>*@
-                                            </div>
-                                        </div>
-                                        <div class="user-activity d-flex justify-content-between">
-                                            <div class="keybord-block w-50 pe-1">
-                                                <i class="icofont-ui-keyboard "></i>
-                                                <div class="progress" style="height: 5px;">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        @foreach (var hour in ScreenCasts.AsEnumerable().GroupBy(x => new { x.TimeTaken.Hour, x.TimeTaken.Date }))
+                        {
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="timezon-block py-3">
+                                        <h4 class="fw-bold mb-0 color-600">@hour.FirstOrDefault().TimeTaken.ToString("h tt").ToUpper()</h4>
+                                        <span class="text-muted">@hour.FirstOrDefault().TimeTaken.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 row-cols-xl-6 row-cols-xxl-6 g-3">
+                                @foreach (var screenShot in hour)
+                                {
+                                    <div class="col">
+                                        <div class="screen-card shadow-sm p-2">
+                                            <a href="@String.Format("/ScreenCasts/{0}.png",@screenShot.ScrName)">
+                                                <img class="img-fluid img-thumbnail" src="@String.Format("/ScreenCasts/{0}.png",@screenShot.ScrName)" alt="">
+                                            </a>
+                                            <div class="user-profile d-flex align-items-center mt-3">
+                                                <img class="avatar rounded-circle" src="~/images/profile_av.svg" alt="profile">
+                                                <div class="u-info ms-2">
+                                                    <span class="fw-bold">@screenShot.DeveloperName</span><br>
+                                                    <span class="fw-bold text-success">@screenShot.ProjName</span><br>
+                                                    @*<span class="text-muted">@screenShot.TimeTaken.ToString("hh:mm tt").ToUpper()</span>*@
                                                 </div>
                                             </div>
-                                            <div class="mouse-block w-50 ps-1 text-end">
-                                                <i class="icofont-wireless-mouse "></i>
-                                                <div class="progress" style="height: 5px;">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="user-activity d-flex justify-content-between">
+                                                <div class="keybord-block w-50 pe-1">
+                                                    <i class="icofont-ui-keyboard "></i>
+                                                    <div class="progress" style="height: 5px;">
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="mouse-block w-50 ps-1 text-end">
+                                                    <i class="icofont-wireless-mouse "></i>
+                                                    <div class="progress" style="height: 5px;">
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
+                                }
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>
