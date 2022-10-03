@@ -30,6 +30,8 @@
                                                 <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 92px;" aria-label="End Time: activate to sort column ascending">End Time</th>
                                                 <th class="dt-body-right sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 53px;" aria-label="Worked: activate to sort column ascending">Worked</th>
                                                 <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 116px;" aria-label="Task Detail: activate to sort column ascending">Task Detail</th>
+                                                <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 116px;" aria-label="Task Detail: activate to sort column ascending">KeyHits</th>
+                                                <th class="sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 116px;" aria-label="Task Detail: activate to sort column ascending">MouseClicks</th>
                                                 <th class="dt-body-right sorting" tabindex="0" aria-controls="timetracker-table" rowspan="1" colspan="1" style="width: 67px;" aria-label="Action: activate to sort column ascending">Action</th>
                                             </tr>
                                         </thead>
@@ -43,6 +45,8 @@
                                                 <td>@track.EndDate.ToString("HH:mm:ss")</td>
                                                 <td class=" dt-body-right"><strong>@string.Format("{0:%h}h, {0:%m}m, {0:%s}s", (track.EndDate - track.BeginDate))</strong></td>
                                                 <td>@track.TTDescr</td>
+                                                <td>@track.KeyboardHits</td>
+                                                <td>@track.MouseClicks</td>
                                                 <td class=" dt-body-right">
                                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                                                         <button type="button" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i></button>
