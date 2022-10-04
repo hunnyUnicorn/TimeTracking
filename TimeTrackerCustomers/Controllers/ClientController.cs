@@ -158,6 +158,11 @@ namespace TimeTrackerCustomers.Controllers
             }
             return PartialView("_ScreenCastList", model);
         }
+        [HttpGet]
+        public async Task<IActionResult> ClientProfile()
+        {
+            return View();
+        }
         private async Task LoadScreenCastFilterItems(int role = 0)
         {
             var list = (await bl.GetItemListAsync(ListItemType.ProjectDevelopers, role)).Select(x => new SelectListItem
