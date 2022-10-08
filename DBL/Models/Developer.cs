@@ -29,6 +29,10 @@ namespace DBL.Models
         public string UserIdentifier { get; set; }
         public int InviteStatus { get; set; }
         public string RejectReason { get; set; }
+        public string DevName { get; set; }
+        public decimal RenewalAmount { get; set; }
+        public DateTime NextRenewalDate { get; set; }
+        public string PlanName { get; set; }
     }
     public class DevLogin
     {

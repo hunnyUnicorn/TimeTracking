@@ -23,6 +23,9 @@ namespace DBL.Models
         public string RawPass { get; set; }
         [JsonIgnore]
         public string UserIdentifier { get; set; }
+        public decimal RenewalAmount { get; set; }
+        public DateTime NextRenewalDate { get; set; }
+        public string PlanName { get; set; }
     }
     public class ClientLogin
     {

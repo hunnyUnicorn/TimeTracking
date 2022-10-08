@@ -158,5 +158,14 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<BaseEntity>("Sp_Invite_Action", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
+        public async Task<IEnumerable<Developer>> GetDevelopersAsync()
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                return (await connection.QueryAsync<Developer>("Sp_Get_Developers", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
     }
 }

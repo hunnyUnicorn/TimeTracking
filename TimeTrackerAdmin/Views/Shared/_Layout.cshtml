@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/plugin/light-gallery/css/lightgallery.css">
     <!-- project css file  -->
     <link rel="stylesheet" href="~/css/timetracker.style.min.css">
+    @RenderSection("css", false)
 </head>
 <body>
     <div id="timetracker-layout" class="theme-mist">
@@ -29,10 +30,37 @@
                 <!-- Menu: main ul -->
                 <ul class="menu-list flex-grow-1 mt-3">
                     <li><a asp-action="Dashboard" asp-controller="Home" class="m-link active"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
-                    <li><a asp-action="Projects" asp-controller="Developer" class="m-link active"><i class="icofont-home fs-5"></i> <span>Projects</span></a></li>
-                    <li><a asp-action="Reports" asp-controller="Developer" class="m-link"><i class="icofont-computer fs-5"></i> <span>Reports</span></a></li>
-                    <li><a asp-action="MyActivities" asp-controller="Developer" class="m-link"><i class="icofont-paint fs-5"></i> <span>My Activities</span></a></li>
-                    <li><a asp-action="WebTracker" asp-controller="Developer" class="m-link"><i class="icofont-paint fs-5"></i> <span>Web Tracker</span></a></li>
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#customers" href="#">
+                            <i class="icofont-people fs-5"></i> <span>Customers</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="customers">
+                            <li><a class="ms-link" asp-action="Clients" asp-controller="Customers">Clients</a></li>
+                            <li><a class="ms-link active" asp-action="Developers" asp-controller="Customers">Developers</a></li>
+                        </ul>
+                    </li>
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#maintenance" href="#">
+                            <i class="icofont-spanner fs-5"></i> <span>Maintenance</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="maintenance">
+                            <li><a class="ms-link" asp-action="Subscriptions" asp-controller="Maintenance">Subscriptions</a></li>
+                            <li><a class="ms-link" asp-action="ProjectCategories" asp-controller="Maintenance">Project Categories</a></li>
+                            <li><a class="ms-link active" asp-action="Currencies" asp-controller="Maintenance">Currencies</a></li>
+                        </ul>
+                    </li>
+                    <li class="collapsed">
+                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#Security" href="#">
+                            <i class="icofont-lock fs-5"></i> <span>Security</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span>
+                        </a>
+                        <!-- Menu: Sub menu ul -->
+                        <ul class="sub-menu collapse" id="Security">
+                            <li><a class="ms-link" href="projects.html">User Groups</a></li>
+                            <li><a class="ms-link" href="projects.html">Supervisor Actions</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <!-- Menu: menu collepce btn -->
@@ -395,7 +423,7 @@
             </div>
 
             <!-- Body: Body -->
-           @RenderBody()
+            @RenderBody()
 
             <!-- Modal Custom Settings-->
             <div class="modal fade right" id="Settingmodal" tabindex="-1" aria-hidden="true">
@@ -545,5 +573,6 @@
     <!-- Jquery Page Js -->
     <script src="~/js/template.js"></script>
     <script src="~/js/page/dashboard.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html> 

@@ -903,5 +903,16 @@ namespace DBL
             });
         }
         #endregion
+
+        #region Admin Actions
+        public async Task<IEnumerable<Client>> GetClients()
+        {
+            return await db.ClientsRepository.GetClients();
+        }
+        public async Task<IEnumerable<Developer>> GetDevelopersAsync()
+        {
+            return await db.DeveloperRepository.GetDevelopersAsync();
+        }
+        #endregion
     }
 }

@@ -52,6 +52,15 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<GenericModel>("sp_Client_Login", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
+        public async Task<IEnumerable<Client>> GetClients()
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                return (await connection.QueryAsync<Client>("Sp_Get_Clients", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
         #region Projects
         public async Task<BaseEntity> CreateProject(Project model)
         {

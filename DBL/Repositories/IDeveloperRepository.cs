@@ -22,5 +22,6 @@ namespace DBL.Repositories
         Task<ProjectInvite> ProjectInvite(int InviteCode);
         Task<IEnumerable<ProjectInvite>> ProjectInvites(int DeveloperCode);
         Task<BaseEntity> Invite_Action(int InviteAction, int DevCode, int InviteCode, string RejectReason);
+        Task<IEnumerable<Developer>> GetDevelopersAsync();
     }
 }

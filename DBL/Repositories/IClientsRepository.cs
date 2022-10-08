@@ -13,6 +13,7 @@ namespace DBL.Repositories
         Task<GenericModel> RegisterClient(Client model);
         Task<GenericModel> VerifyClient(string email);
         Task<IEnumerable<GenericModel>> ClientLogin(int clientcode, int status);
+        Task<IEnumerable<Client>> GetClients();
         #region projects
         Task<BaseEntity> CreateProject(Project model);
         Task<IEnumerable<Project>> Projects(int clientCode, int status);
