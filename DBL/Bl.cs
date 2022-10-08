@@ -913,6 +913,20 @@ namespace DBL
         {
             return await db.DeveloperRepository.GetDevelopersAsync();
         }
+        public async Task<IEnumerable<Subscription>> GetSubscriptionsAsync()
+        {
+            return await db.MaintenanceRepository.GetSubscriptions();
+        }
+        public async Task<IEnumerable<Profile>> GetUserGroupsAsync()
+        {
+            return await db.SecurityRepository.GetProfileListAsync("");
+        }
+        #region maker/checker
+        public async Task<IEnumerable<SupervisorQueueModel>> GetMySupervisorQueueAsync(int userCode, int type, McCategory category, int group)
+        {
+            return await db.SupervisorRepository.GetMySupervisorQueueAsync(userCode, type, category, group);
+        }
+        #endregion
         #endregion
     }
 }

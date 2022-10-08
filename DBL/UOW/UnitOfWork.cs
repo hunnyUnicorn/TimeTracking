@@ -15,6 +15,7 @@ namespace DBL.UOW
         private IGeneralRepository generalRepository;
         private IDeveloperRepository developerRepository;
         private IClientsRepository clientsRepository;
+        private IMaintenanceRepository maintenanceRepository;
 
 
         public UnitOfWork(string connectionString)
@@ -45,6 +46,10 @@ namespace DBL.UOW
         {
             get { return clientsRepository ?? (clientsRepository = new ClientsRepository(connString)); }
         }
+        public IMaintenanceRepository MaintenanceRepository
+        {
+            get { return maintenanceRepository ?? (maintenanceRepository = new MaintenanceRepository(connString)); }
+        }
         public void Reset()
         {
             securityRepository = null;
@@ -52,6 +57,7 @@ namespace DBL.UOW
             generalRepository = null;
             developerRepository = null;
             clientsRepository = null;
+            maintenanceRepository = null;
         }
 
         public void Dispose()

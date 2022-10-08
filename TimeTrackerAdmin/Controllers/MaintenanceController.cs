@@ -19,7 +19,16 @@ namespace TimeTrackerAdmin.Controllers
         [HttpGet]
         public async Task<IActionResult> Subscriptions()
         {
-            return View();
+            var model = new List<Subscription>();
+            try
+            {
+                model = (await bl.GetSubscriptionsAsync()).ToList();
+            }
+            catch(Exception ex)
+            {
+                LogUtil.Error(logFile, "Maintenance.Subscriptions()", ex);
+            }
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> ProjectCategories()

@@ -2,10 +2,12 @@
 using DBL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using DBL.Entities;
+using DBL.Enums;
 
 namespace TimeTrackerAdmin.Controllers
 {
-    public class SecurityController : Controller
+    public class SecurityController : BaseController
     {
         private Bl bl;
         private string logFile;
@@ -17,14 +19,24 @@ namespace TimeTrackerAdmin.Controllers
             bl.LogFile = logFile;
         }
         [HttpGet]
-        public async Task<IActionResult> UserGroups()
+        public async Task<IActionResult> UserGroups(string query="")
         {
-            return View();
+            var model = new List<Profile>();
+            try
+            {
+                model = (await bl.GetProfilesAsync(query)).ToList();
+            }
+            catch(Exception ex)
+            {
+                LogUtil.Error(logFile, "Security.UserGroups()", ex);
+            }
+            return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> Supervisor()
+        public async Task<IActionResult> Supervisor(int groupcode = 0, int typ = 0)
         {
-            return View();
+            var data = await bl.GetMySupervisorQueueAsync(SessionUserData.UserCode, typ, McCategory.Supervisor, groupcode);
+            return View(data);
         }
     }
 }
