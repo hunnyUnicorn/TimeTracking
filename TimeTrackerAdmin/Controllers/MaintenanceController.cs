@@ -33,7 +33,16 @@ namespace TimeTrackerAdmin.Controllers
         [HttpGet]
         public async Task<IActionResult> ProjectCategories()
         {
-            return View();
+            var model = new List<ProjectCategory>();
+            try
+            {
+                model = (await bl.GetProjectCategoriesAsync()).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Maintenance.ProjectCategories()", ex);
+            }
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Currencies()

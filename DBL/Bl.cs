@@ -927,6 +927,10 @@ namespace DBL
             return await db.SupervisorRepository.GetMySupervisorQueueAsync(userCode, type, category, group);
         }
         #endregion
+        public async Task<IEnumerable<ProjectCategory>> GetProjectCategoriesAsync()
+        {
+            return await db.MaintenanceRepository.GetProjectCategories();
+        }
         #endregion
     }
 }

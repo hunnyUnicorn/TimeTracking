@@ -26,6 +26,7 @@ namespace TimeTrackerAdmin.Controllers
             }
             catch(Exception ex)
             {
+                Danger("Error occured when getting client list");
                 LogUtil.Error(logFile, "Customers.Clients()", ex);
             }
             return View(model);
@@ -40,6 +41,7 @@ namespace TimeTrackerAdmin.Controllers
             }
             catch (Exception ex)
             {
+                Danger("Error occured when getting developers list");
                 LogUtil.Error(logFile, "Customers.Clients()", ex);
             }
             return View(model);

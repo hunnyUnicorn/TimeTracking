@@ -10,5 +10,6 @@ namespace DBL.Repositories
     public interface IMaintenanceRepository
     {
         Task<IEnumerable<Subscription>> GetSubscriptions();
+        Task<IEnumerable<ProjectCategory>> GetProjectCategories();
     }
 }

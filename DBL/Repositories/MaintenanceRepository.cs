@@ -24,5 +24,14 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<Subscription>(sql)).ToList();
             }
         }
+        public async Task<IEnumerable<ProjectCategory>> GetProjectCategories()
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                string sql = "select * from ProjectCats";
+                connection.Open();
+                return (await connection.QueryAsync<ProjectCategory>(sql)).ToList();
+            }
+        }
     }
 }
