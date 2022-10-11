@@ -16,6 +16,7 @@ namespace TimeTrackerAdmin.Controllers
             logFile = appSett.Value.LogFile;
             bl.LogFile = logFile;
         }
+        #region Clients
         [HttpGet]
         public async Task<IActionResult> Clients()
         {
@@ -31,6 +32,12 @@ namespace TimeTrackerAdmin.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> Client(int clientcode)
+        {
+            return View();
+        }
+        #endregion
         [HttpGet]
         public async Task<IActionResult> Developers()
         {

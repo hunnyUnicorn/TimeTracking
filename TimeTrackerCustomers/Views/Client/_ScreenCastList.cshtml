@@ -19,7 +19,7 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="timezon-block py-3">
-                                    <h4 class="fw-bold mb-0 color-600">@hour.FirstOrDefault().TimeTaken.ToString("h tt").ToUpper()</h4>
+                                    <h4 class="h6 fw-bold mb-0 color-600">@hour.FirstOrDefault().TimeTaken.ToString("h:00 tt").ToUpper() - @hour.FirstOrDefault().TimeTaken.ToString("h:59 tt").ToUpper()</h4>
                                     <span class="text-muted">@hour.FirstOrDefault().TimeTaken.ToString("MMM dd, yyyy")</span>
                                 </div>
                             </div>
