@@ -132,6 +132,16 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<screenshotdets>("Sp_ScreenCasts_Client", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
+        public async Task<IEnumerable<TimeTrack>> TimeTracks(int clientCode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ClientCode", clientCode);
+                return (await connection.QueryAsync<TimeTrack>("Sp_GetTimeTracks_Client", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
         #endregion
     }
 }

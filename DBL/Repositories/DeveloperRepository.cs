@@ -167,5 +167,15 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<Developer>("Sp_Get_Developers", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
+        public async Task<IEnumerable<Invoice>> GetDeveloperInvoices(int DevCode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@DevCode", DevCode);
+                return (await connection.QueryAsync<Invoice>("Sp_GetInvoices_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
     }
 }

@@ -17,5 +17,6 @@ namespace DBL.Models
         public string ProjectName { get; set; }
         public int KeyboardHits { get; set; }
         public int MouseClicks { get; set; }
+        public string DeveloperName { get; set; }
     }
 }

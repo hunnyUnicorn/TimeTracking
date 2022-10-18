@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
+using Rotativa.AspNetCore;
+using System.Reflection;
+using TimeTrackerCustomers.Utils;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace TimeTrackerCustomers.Controllers
 {
@@ -16,11 +21,13 @@ namespace TimeTrackerCustomers.Controllers
     {
         private Bl bl;
         private string logFile;
-        public DeveloperController(IOptions<AppConfig> appSett)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public DeveloperController(IOptions<AppConfig> appSett, IHostingEnvironment hostingEnvironment)
         {
             bl = new Bl(appSett.Value.ConnectionString);
             logFile = appSett.Value.LogFile;
             bl.LogFile = logFile;
+            _hostingEnvironment = hostingEnvironment;
         }
         [HttpGet]
         public async Task<IActionResult> DashBoard()
@@ -235,6 +242,33 @@ namespace TimeTrackerCustomers.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Invoices()
+        {
+            var model = new List<Invoice>();
+            try
+            {
+                model = (await bl.GetDeveloperInvoices(SessionDeveloperData.DevCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.Invoices()", ex);
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> InvoiceView(int invoicecode)
+        {
+            return PartialView("_InvoiceView");
+        }
+        [HttpGet]
+        public async Task<IActionResult> InvoicePreview()
+        {
+            return new ViewAsPdf("InvoicePreview") {
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+            };
+        }
+       
         private async Task LoadScreenCastFilterItems(int role = 0)
         {
             var list = (await bl.GetItemListAsync(ListItemType.DeveloperProjects, role)).Select(x => new SelectListItem
@@ -247,3 +281,4 @@ namespace TimeTrackerCustomers.Controllers
         }
     }
 }
+ 

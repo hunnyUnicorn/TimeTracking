@@ -21,6 +21,7 @@ namespace DBL.Repositories
         Task<Project> GetProject(int code);
         Task<IEnumerable<Developer>> DevelopersPerProject(int projectcode);
         Task<IEnumerable<screenshotdets>> GetScreenShotsPerClient(int filterType, string value, int clientcode);
+        Task<IEnumerable<TimeTrack>> TimeTracks(int clientCode);
         #endregion
     }
 }

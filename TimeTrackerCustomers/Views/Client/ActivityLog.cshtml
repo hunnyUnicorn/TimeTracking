@@ -1,0 +1,84 @@
+﻿@model IEnumerable<TimeTrack>
+@{
+    ViewData["Title"] = "ActivityLog";
+    Layout = "~/Views/Shared/_LayoutClients.cshtml";
+}
+
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                    <h3 class="h4 mb-0">Developers Activity Log</h3>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="timetracker-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="col-sm-12">
+                                <table id="timetracker-table" class="table table-hover custom-table align-middle mb-0 nowrap dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="timetracker-table_info">
+                                    <thead>
+                                        <tr>
+                                            <th>Project</th>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Worked</th>
+                                            <th>Task Detail</th>
+                                            <th>Developer</th>
+                                            <th>KeyHits</th>
+                                            <th>MouseClicks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var track in Model)
+                                        {
+                                            <tr class="odd">
+                                                <td class=" dt-body-right"><strong>@track.ProjectName</strong></td>
+                                                <td>@track.BeginDate.ToString("dd MMM, yyyy")</td>
+                                                <td>@track.BeginDate.ToString("HH:mm:ss")</td>
+                                                <td>@track.EndDate.ToString("HH:mm:ss")</td>
+                                                <td class=" dt-body-right"><strong>@string.Format("{0:%h}h, {0:%m}m, {0:%s}s", (track.EndDate - track.BeginDate))</strong></td>
+                                                <td>@track.TTDescr</td>
+                                                <td>@track.DeveloperName</td>
+                                                <td>@track.KeyboardHits</td>
+                                                <td>@track.MouseClicks</td>
+                                                <td class=" dt-body-right">
+                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                        <button type="button" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i></button>
+                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-close-line-squared-alt text-danger"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" href="~/plugin/datatables/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/plugin/datatables/dataTables.bootstrap5.min.css">
+}
+@section Scripts{
+    <script src="~/bundles/dataTables.bundle.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#timetracker-table').addClass('nowrap').dataTable({
+                responsive: true
+            });
+        });
+    </script>
+
+}

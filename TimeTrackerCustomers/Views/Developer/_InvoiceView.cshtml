@@ -1,0 +1,63 @@
+﻿<div class="modal-header">
+    <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Invoice 001</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <page size="A4" id="invoice">
+        <div class="container-fluid w-auto p-3 m-4 border border-secondary invoice-container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h6 class="underline bold"><strong>INV000000000103</strong></h6>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-6 text-end">
+                    <h5>Invoice Details</h5>
+                    <p class="m-1">DEVELOPER : CHARLES TAITI</p>
+                    <p class="m-1">INVOICE NO : INV000000000103</p>
+                    <p class="m-1">DATE : @DateTime.Now.ToShortDateString()</p>
+                </div>
+            </div>
+            <div class="row justify-content-start">
+                <div class="col-md-6">
+                    <h5>Client Details</h5>
+                    <p class="m-1">TAIWAC SOLUTIONS</p>
+                    <p class="m-1">Software Development</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Total Time</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Testing</td>
+                                <td>4h</td>
+                                <td>$ 20.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><strong>Total</strong></td>
+                                <td><strong>$ 20.00</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-8 text-center"><i>Terms and conditions apply</i></div>
+            </div>
+        </div>
+    </page>
+</div>
+<div class="modal-footer">
+    <a asp-action="InvoicePreview" asp-controller="Developer" target="_blank" class="btn btn-secondary print">Print</a>
+    <button type="button" form="CreateProject" class="btn btn-primary">Send Via Email</button>
+</div>

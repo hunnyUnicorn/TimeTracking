@@ -607,6 +607,10 @@ namespace DBL
         {
             return await db.DeveloperRepository.GetTimeTracks(devcode);
         }
+        public async Task<IEnumerable<Invoice>> GetDeveloperInvoices(int devcode)
+        {
+            return await db.DeveloperRepository.GetDeveloperInvoices(devcode);
+        }
         #endregion
         #region Common Actions
         public async Task<int> Login(UserLoginModel model)
@@ -814,6 +818,10 @@ namespace DBL
         public async Task<IEnumerable<screenshotdets>> GetDeveloperScreenShots(int filter,string value,int devcode)
         {
             return await db.DeveloperRepository.GetScreenShots(filter,value,devcode);
+        }
+        public async Task<IEnumerable<TimeTrack>> GetTimeTracksClientAsync(int clientcode)
+        {
+            return await db.ClientsRepository.TimeTracks(clientcode);
         }
         #region projects
         public async Task<BaseEntity> CreateProject(Project project)

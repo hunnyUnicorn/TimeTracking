@@ -6,6 +6,10 @@
       "provider": "unpkg",
       "library": "sweetalert2@11.4.33",
       "destination": "wwwroot/lib/sweetalert2/"
+    },
+    {
+      "library": "jQuery.print@1.6.2",
+      "destination": "wwwroot/lib/jQuery.print/"
     }
   ]
 }

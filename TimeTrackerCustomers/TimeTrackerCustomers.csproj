@@ -8,12 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IronPdf" Version="2022.10.9622" />
+    <PackageReference Include="IronPdf.Native.Chrome.Windows" Version="2022.10.9530" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.2.0" />
     <PackageReference Include="Taiwac.Tools.DbConnection" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DBL\DBL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Rotativa\" />
   </ItemGroup>
 
 </Project>

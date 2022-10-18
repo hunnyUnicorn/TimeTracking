@@ -8,6 +8,7 @@ using DBL.Entities;
 using DBL.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
+using Newtonsoft.Json.Linq;
 
 namespace TimeTrackerCustomers.Controllers
 {
@@ -162,6 +163,20 @@ namespace TimeTrackerCustomers.Controllers
         public async Task<IActionResult> ClientProfile()
         {
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> ActivityLog()
+        {
+            var model = new List<TimeTrack>();
+            try
+            {
+                model = (await bl.GetTimeTracksClientAsync(SessionClientData.ClientCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Client.ActivityLog()", ex);
+            }
+            return View(model);
         }
         private async Task LoadScreenCastFilterItems(int role = 0)
         {

@@ -1,6 +1,7 @@
 using DBL.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.FileProviders;
+using Rotativa.AspNetCore;
 using TimeTrackerCustomers;
 using TimeTrackerCustomers.Utils;
 
@@ -50,5 +51,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+IWebHostEnvironment env = app.Environment;
+RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env);
 app.Run();
