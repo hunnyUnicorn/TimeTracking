@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Invoices";
     Layout = "~/Views/Shared/_LayoutDevelopers.cshtml";
+    var invoiceModel = new Invoice();
 }
 
 <!-- Body: Body -->
@@ -13,58 +14,47 @@
                 <div class="card-header no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
                     <h3 class="fw-bold mb-0 py-3 pb-2">Invoices</h3>
                 </div>
+                <div class="d-flex py-2 project-tab flex-wrap w-sm-100 ms-auto">
+                    <button type="button" class="btn btn-dark w-sm-100 mb-2 mb-md-0 float-end" id="btnCreateInvoice" data-bs-toggle="modal" data-bs-target="#createinvoice"><i class="icofont-plus-circle me-2 fs-6"></i>Create Invoice</button>
+                </div>
             </div>
         </div> <!-- Row end  -->
 
         <div class="row justify-content-center">
             <div class="col-lg-12 col-md-12">
                 <div class="row justify-content-center">
-                    <div class="col-lg-8 col-md-12">
-                        @foreach (var invoice in Model)
-                        {
-                            <div class="card mb-3">
-                                <div class="card-header justify-content-between d-flex align-items-center">
-                                    <div class="d-none d-md-block">
-                                        <strong>Invoice No:</strong>
-                                        <span class="text-danger">@invoice.InvoiceRef</span>
-                                    </div>
-                                </div>
-                                <div class="card-body d-sm-flex justify-content-between">
-                                    <a href="javascript:void(0);" class="d-flex">
-                                        <img class="avatar rounded" src="~/images/xs/avatar1.svg" alt="">
-                                        <div class="flex-fill ms-3 text-truncate">
-                                            <h6 class="d-flex justify-content-between mb-0"><span>@invoice.ClientName</span></h6>
-                                            <span class="text-muted">@invoice.ProjectName</span>
-                                        </div>
-                                    </a>
-                                    <div class="text-end d-none d-md-block">
-                                        <p class="mb-1"><i class="icofont-location-pin ps-1"></i>Hours Worked : @invoice.TotalHours</p>
-                                        <span class="text-muted"><i class="icofont-money ps-1"></i>$@invoice.TotalAmount</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer justify-content-between d-flex align-items-center">
-                                    <div class="d-none d-md-block">
-                                        <strong>Date on:</strong>
-                                        <span>@invoice.DateGenerated.ToShortDateString()</span>
-                                    </div>
-                                    <div class="card-hover-show">
-                                        <a class="btn btn-sm btn-white border lift preview-invoice" href="#" icode="@invoice.InvoiceCode">View</a>
-                                        <a class="btn btn-sm btn-white border lift" href="#">Send</a>
-                                        <a class="btn btn-sm btn-white border lift" href="#">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                    <div class="col-lg-12 col-md-12">
+                        
+                        <table id="timetracker-table" class="table table-hover custom-table align-middle mb-0 nowrap dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="timetracker-table_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>Invoice Ref</th>
+                                    <th>Client Name </th>
+                                    <th>Project Name</th>
+                                    <th>Hours Worked</th>
+                                    <th>Total Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination mt-4">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
+                                @foreach (var invoice in Model)
+                                {
+                                    <tr role="row" class="odd">
+                                        <td><strong>@invoice.InvoiceRef</strong></td>
+                                        <td>@invoice.ClientName</td>
+                                        <td>@invoice.ProjectName</td>
+                                        <td>@invoice.TotalHours</td>
+                                        <td>@invoice.TotalAmount</td>
+                                        <td class=" dt-body-right">
+                                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                <button type="button" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i> View Details</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>  <!-- Row end  -->
 
@@ -79,9 +69,14 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="createInvoice" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="invoiceModal">
+        <div class="modal-content" id="createInvoiceContent">
+        </div>
+    </div>
+</div>
 @section Scripts{
-     <script src="~/lib/jQuery.print/jQuery.print.js"></script>
+     <script src="~/lib/jspdf-fixed/dist/jspdf.debug.js"></script>
      <script type="text/javascript">
         $(".preview-invoice").click(function (e) {
 
@@ -99,7 +94,38 @@
                 myModal.show();
             });
         });
+         $('#btnCreateInvoice').click(function (e) {
+             e.preventDefault();
+             $.ajax({
+                 url: '@Url.Action("Invoice", "Developer")',
+                 type: "get"
+            }).done(function (data) {
+                $('#createInvoiceContent').html(data);
+                var myModal = new bootstrap.Modal(document.getElementById("createInvoice"), {});
+                myModal.show();
+                $("#CreateInvoice").submit(function (e) {
 
+                    //prevent Default functionality
+                    e.preventDefault();
+
+                    //do your own request an handle the results
+                    $.ajax({
+                        url: '@Url.Action("Invoice", "Developer")',
+                        type: "post",
+                        data: $("#CreateInvoice").serialize()
+                    }).done(function (data) {
+                        if (data.success) {
+                            $("#errorMessage").removeClass("text-danger");
+                            $("#errorMessage").addClass("text-success");
+                            $("#errorMessage").text(data.message);
+                        }
+                        else {
+                            $("#errorMessage").text(data.message);
+                        }
+                        });
+                });
+            });
+         })
      </script>
 }
 

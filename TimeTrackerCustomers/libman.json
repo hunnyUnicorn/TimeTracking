@@ -10,6 +10,15 @@
     {
       "library": "jQuery.print@1.6.2",
       "destination": "wwwroot/lib/jQuery.print/"
+    },
+    {
+      "library": "jspdf@2.5.1",
+      "destination": "wwwroot/lib/jspdf/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jspdf-fixed@1.0.0",
+      "destination": "wwwroot/lib/jspdf-fixed/"
     }
   ]
 }

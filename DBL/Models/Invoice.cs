@@ -22,4 +22,11 @@ namespace DBL.Models
         public string ProjectName { get; set; }
         public string ClientName { get; set; }
     }
+    public class InvoiceDets
+    {
+        public string ItemDescr { get; set; }
+        public string Item { get; set; }
+        public int ItemType { get; set; }
+        public string ItemValue { get; set; }
+    }
 }

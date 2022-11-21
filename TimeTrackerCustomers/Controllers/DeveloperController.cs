@@ -2,6 +2,8 @@
 using DBL.Entities;
 using DBL.Enums;
 using DBL.Models;
+using FastReport;
+using FastReport.Export.PdfSimple;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +12,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using Rotativa.AspNetCore;
+using System.Data;
 using System.Reflection;
+using TimeTrackerAdmin.Helpers;
 using TimeTrackerCustomers.Utils;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
@@ -259,17 +263,101 @@ namespace TimeTrackerCustomers.Controllers
         [HttpPost]
         public async Task<IActionResult> InvoiceView(int invoicecode)
         {
-            return PartialView("_InvoiceView");
+            var invoicedets = new List<InvoiceDets>();
+            invoicedets = (await bl.GetInvoiceDets(invoicecode)).ToList();
+            ViewBag.DevName = invoicedets.Where(x => x.Item == "Dev_Name" && x.ItemType == 3).FirstOrDefault().ItemValue;
+            ViewBag.Invoiceref = invoicedets.Where(x => x.Item == "Invoice_Ref" && x.ItemType == 0).FirstOrDefault().ItemValue;
+            ViewBag.DateGen = invoicedets.Where(x => x.Item == "Gen_Date" && x.ItemType == 0).FirstOrDefault().ItemValue;
+            ViewBag.ClientName = invoicedets.Where(x => x.Item == "Client_Name" && x.ItemType == 2).FirstOrDefault().ItemValue;
+            ViewBag.ProjectName = invoicedets.Where(x => x.Item == "Project_Title" && x.ItemType == 1).FirstOrDefault().ItemValue;
+            return PartialView("_InvoiceView", invoicedets);
         }
         [HttpGet]
-        public async Task<IActionResult> InvoicePreview()
+        public async Task<IActionResult> InvoicePreview(int invoicecode)
         {
-            return new ViewAsPdf("InvoicePreview") {
-                PageSize = Rotativa.AspNetCore.Options.Size.A4,
-            };
+            var invoicedets = new List<InvoiceDets>();
+            invoicedets = (await bl.GetInvoiceDets(invoicecode)).ToList();
+
+            var devName = invoicedets.Where(x => x.Item == "Dev_Name" && x.ItemType == 3).FirstOrDefault().ItemValue;
+            var invoiceref = invoicedets.Where(x => x.Item == "Invoice_Ref" && x.ItemType == 0).FirstOrDefault().ItemValue;
+            var dateGen = invoicedets.Where(x => x.Item == "Gen_Date" && x.ItemType == 0).FirstOrDefault().ItemValue;
+            var ClientName = invoicedets.Where(x => x.Item == "Client_Name" && x.ItemType == 2).FirstOrDefault().ItemValue;
+            var projectName = invoicedets.Where(x => x.Item == "Project_Title" && x.ItemType == 1).FirstOrDefault().ItemValue;
+            FastReport.Report webReport = new FastReport.Report();
+            var newFilePdf = invoiceref + ".pdf";
+            webReport.Report.Load(Path.Combine(Environment.CurrentDirectory,"Reports","invoice.frx"));
+            webReport.Report.Dictionary.Connections.Clear();
+            var dts = SessionHelper.ToDataSet<InvoiceDets>(invoicedets.Where(x=>x.ItemType==4).ToList());
+            webReport.Report.RegisterData(dts.Tables[0], "Data");
+            webReport.GetDataSource("Data").Enabled = true;
+            webReport.SetParameterValue("DeveloperName", devName);
+            webReport.SetParameterValue("InvoiceNo", invoiceref);
+            webReport.SetParameterValue("DateGen", dateGen);
+            webReport.SetParameterValue("ClientName", ClientName);
+            webReport.SetParameterValue("ProjectName", projectName);
+            (webReport.FindObject("Data1") as DataBand).DataSource = webReport.GetDataSource("Data");
+
+            webReport.Report.Prepare();
+            // save file in stream
+            using (MemoryStream ms = new MemoryStream())
+            {
+                PDFSimpleExport pdfExport = new PDFSimpleExport();
+                pdfExport.Export(webReport.Report, ms);
+                ms.Flush();
+                return File(ms.ToArray(), System.Net.Mime.MediaTypeNames.Application.Octet, newFilePdf);
+            }
         }
-       
+        [HttpGet]
+        public async Task<IActionResult> Invoice()
+        {
+            var model = new Invoice();
+            await LoadInvoiceItems(SessionDeveloperData.DevCode);
+            return PartialView("_invoice",model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Invoice(Invoice model)
+        {
+            ReqResult reqResult = new ReqResult { Success = false };
+            try
+            {
+                model.DeveloperCode = SessionDeveloperData.DevCode;
+                var result = await bl.CreateInvoice(model);
+                reqResult.Message = result.RespMessage;
+                if (result.RespStatus == 0)
+                {
+                    reqResult.Success = true;
+                }
+                else
+                {
+                    if (result.RespStatus == 1)
+                    {
+                        // Danger(result.RespMessage);
+                    }
+                    else
+                    {
+                        LogUtil.Error(logFile, "Developer.CreateInvoice", new Exception(result.RespMessage));
+                        // Danger("Action failed due to a database error!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.CreateInvoice", ex);
+                reqResult.Message = "Action failed due to a database error!";
+            }
+            return Json(reqResult);
+        }
         private async Task LoadScreenCastFilterItems(int role = 0)
+        {
+            var list = (await bl.GetItemListAsync(ListItemType.DeveloperProjects, role)).Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value
+            }).ToList();
+
+            ViewData["Projects"] = list;
+        }
+        private async Task LoadInvoiceItems(int role = 0)
         {
             var list = (await bl.GetItemListAsync(ListItemType.DeveloperProjects, role)).Select(x => new SelectListItem
             {

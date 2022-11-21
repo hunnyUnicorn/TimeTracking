@@ -1,4 +1,5 @@
 using DBL.Models;
+using FastReport.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.FileProviders;
 using Rotativa.AspNetCore;
@@ -47,10 +48,12 @@ app.UseStaticFiles(new StaticFileOptions()
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseDeveloperExceptionPage();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 IWebHostEnvironment env = app.Environment;
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env);
+FastReport.Utils.RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 app.Run();

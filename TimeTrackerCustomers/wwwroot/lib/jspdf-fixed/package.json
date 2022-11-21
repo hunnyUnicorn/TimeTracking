@@ -1,0 +1,26 @@
+{
+  "name": "jspdf-fixed",
+  "version": "1.0.0",
+  "description": "forked version of jsPDF",
+  "main": "dist/jspdf.min.js",
+  "directories": {
+    "doc": "doc",
+    "example": "examples",
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toddmoorega/jsPDF.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toddmoorega/jsPDF/issues"
+  },
+  "homepage": "https://github.com/toddmoorega/jsPDF#readme"
+}

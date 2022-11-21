@@ -611,6 +611,14 @@ namespace DBL
         {
             return await db.DeveloperRepository.GetDeveloperInvoices(devcode);
         }
+        public async Task<IEnumerable<InvoiceDets>> GetInvoiceDets(int invoicecode)
+        {
+            return await db.DeveloperRepository.GetInvoiceDets(invoicecode);
+        }
+        public async Task<BaseEntity> CreateInvoice(Invoice model)
+        {
+            return await db.DeveloperRepository.Create_Invoice(model);
+        }
         #endregion
         #region Common Actions
         public async Task<int> Login(UserLoginModel model)

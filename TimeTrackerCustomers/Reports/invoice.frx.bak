@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" StartReportEvent="_StartReport" FinishReportEvent="_FinishReport" ReportInfo.Created="10/19/2022 11:11:24" ReportInfo.Modified="10/19/2022 20:25:11" ReportInfo.CreatorVersion="2022.1.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void _FinishReport(object sender, EventArgs e)
+    {
+      Shape1.Height = 1050;
+    }
+
+    private void _StartReport(object sender, EventArgs e)
+    {
+       Shape1.Height = 1050;
+    }
+  }
+}
+</ScriptText>
+  <Styles>
+    <Style Name="EvenStyle" Border.Lines="Top, Bottom" Font="Times New Roman, 10pt, style=Bold"/>
+    <Style Name="HeaderStyle" Fill.Color="DimGray" TextFill.Color="White" Font="Times New Roman, 14pt, style=Bold"/>
+  </Styles>
+  <Dictionary>
+    <MsSqlDataConnection Name="TimeTrackerConn" ConnectionString="rijcmlq1lLcTwHGREtL3dY9svBlirwIWaZIjhSmyoz1p4f3aydId89didIZ/j5J/8IkMpqck3na/QS/+rDISm2W3OzrqcKYzsLP8U6eFzGnIk0m66PUpsJ85xGLvqda9wKsMjfl20/xenfLIPTIXfqFdqv8rhZAbu3XPAa303HVdU4VvhEEH7vyOBl/0UAyDxp4ivYCpsA4l7qCsbe/IdfQhb89V0gEAENM32p4SSue14CiNYg=">
+      <TableDataSource Name="invoicedets" Alias="Data" DataType="System.Int32" Enabled="true" TableName="invoicedets">
+        <Column Name="ItemDescr" DataType="System.String"/>
+        <Column Name="Item" DataType="System.String"/>
+        <Column Name="ItemType" DataType="System.Int32"/>
+        <Column Name="ItemValue" DataType="System.String"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Border.ShadowColor="Silver" Border.Color="Silver" Border.Width="2" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="179.55">
+      <TextObject Name="Text7" Left="236.25" Top="9.45" Width="189" Height="18.9" CanGrow="true" CanShrink="true" Text="Monthly Invoice" HorzAlign="Center" Underlines="true" Font="Arial, 10pt"/>
+      <TableObject Name="Table1" Left="444.15" Top="56.7" Width="255.15" Height="56.7">
+        <TableColumn Name="Column4" Width="94.5"/>
+        <TableColumn Name="Column5" Width="160.65"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell4" Border.Lines="All" Text="Developer" Font="Arial, 10pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="CHARLES TAITI" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell9" Border.Lines="All" Text="Invoice No" Font="Arial, 10pt"/>
+          <TableCell Name="Cell10" Border.Lines="All" Text="INV000000000103" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3">
+          <TableCell Name="Cell14" Border.Lines="All" Text="Date" Font="Arial, 10pt"/>
+          <TableCell Name="Cell15" Border.Lines="All" Text="19/10/2022" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TableObject Name="Table2" Left="9.45" Top="113.4" Width="255.15" Height="56.7">
+        <TableColumn Name="Column6" Width="94.5"/>
+        <TableColumn Name="Column7" Width="160.65"/>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Border.Lines="All" Text="Client" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" Border.Lines="All" Text="TAIWAC SOLUTIONS" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5">
+          <TableCell Name="Cell18" Border.Lines="All" Text="Project" Font="Arial, 10pt"/>
+          <TableCell Name="Cell19" Border.Lines="All" Text="Software Development" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row6">
+          <TableCell Name="Cell20" Border.Lines="All" Text="Total Hours" Font="Arial, 10pt"/>
+          <TableCell Name="Cell21" Border.Lines="All" Text="55h 45m" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="183.55" Width="718.2" Height="37.8" Border.Lines="Top, Bottom" Fill.Color="DimGray">
+      <TextObject Name="Text2" Left="47.25" Top="9.45" Width="160.65" Height="18.9" Fill.Color="DimGray" Text="ACTIVITY" VertAlign="Center" Font="Times New Roman, 12pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="217.35" Top="9.45" Width="292.95" Height="18.9" Fill.Color="DimGray" Text="TOTAL TIME" VertAlign="Center" Font="Times New Roman, 12pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="519.75" Top="9.45" Width="160.65" Height="18.9" Fill.Color="DimGray" Text="AMOUNT" VertAlign="Center" Font="Times New Roman, 12pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="225.35" Width="718.2" Height="28.35" Border.Lines="Top, Bottom" EvenStyle="EvenStyle" DataSource="invoicedets">
+      <TextObject Name="Text1" Left="47.25" Width="160.65" Height="28.35" Text="[Data.ItemDescr]" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text3" Left="217.35" Width="292.95" Height="28.35" Text="[Data.Item]" VertAlign="Center" Font="Arial, 8pt"/>
+      <TextObject Name="Text5" Left="519.75" Width="160.65" Height="28.35" Text="[Data.ItemValue]" VertAlign="Center" Font="Arial, 8pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="257.7" Width="718.2" Height="37.8">
+      <TextObject Name="Text8" Left="198.45" Top="9.45" Width="255.15" Height="18.9" Text="Terms and Conditions apply" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 10pt, style=Bold, Italic"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="299.5" Width="718.2" Height="18.9"/>
+    <OverlayBand Name="Overlay1" Top="322.4" Width="718.2" Height="37.8">
+      <ShapeObject Name="Shape1" Width="718.2" Height="37.8" Border.ShadowColor="Silver" Border.Color="Silver" Border.Width="2"/>
+    </OverlayBand>
+  </ReportPage>
+</Report>

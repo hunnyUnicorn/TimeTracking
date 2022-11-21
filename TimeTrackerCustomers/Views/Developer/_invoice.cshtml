@@ -1,0 +1,40 @@
+﻿@model Invoice
+@{
+    var Projects = ViewData["Projects"] as List<SelectListItem>;
+}
+<div class="modal-header">
+    <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Create Invoice</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <form id="CreateInvoice">
+        <div class="mb-3">
+            <label asp-for="ProjectCode" class="form-label">Project</label>
+            <select asp-for="ProjectCode" asp-items="Projects" class="form-select" aria-label="Default select Project">
+                <option>SELECT PROJECT</option>
+            </select>
+        </div>
+        <div class="deadline-form">
+            <div class="row g-3 mb-3">
+                <div class="col">
+                    <label asp-for="StartDate" for="datepickerdedone" class="form-label">Start Date</label>
+                    <input asp-for="StartDate" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="datepickerdestart">
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col">
+                    <label asp-for="EndDate" for="datepickerdedone" class="form-label">End Date</label>
+                    <input asp-for="EndDate" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="datepickerdeend">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <label class="text-danger" id="errorMessage"></label>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+    <button type="submit" form="CreateInvoice" class="btn btn-primary">Create</button>
+</div>

@@ -177,5 +177,29 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<Invoice>("Sp_GetInvoices_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
+        public async Task<IEnumerable<InvoiceDets>> GetInvoiceDets(int invoicecode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@InvoiceCode", invoicecode);
+                return (await connection.QueryAsync<InvoiceDets>("Sp_Get_InvoiceDets", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
+        public async Task<BaseEntity> Create_Invoice(Invoice model)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@InvoiceType", model.InvoiceType);
+                parameters.Add("@StartDate", model.StartDate);
+                parameters.Add("@EndDate", model.EndDate);
+                parameters.Add("@ProjectCode", model.ProjectCode);
+                parameters.Add("@DeveloperCode", model.DeveloperCode);
+                return (await connection.QueryAsync<BaseEntity>("Sp_Create_Invoice", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
     }
 }
