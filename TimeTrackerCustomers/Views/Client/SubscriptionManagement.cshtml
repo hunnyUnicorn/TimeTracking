@@ -1,0 +1,120 @@
+﻿@model SubPlanDets
+@{
+    ViewData["Title"] = "SubscriptionManagement";
+    Layout = "~/Views/Shared/_LayoutClients.cshtml";
+}
+
+<div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mt-5">
+                <div class="lesson_name">
+                    <div class="project-block light-info-bg">
+                        <i class="icofont-paint"></i>
+                    </div>
+                    <span class="fs-5 project_name fw-bold">Current Subcription Details</span>
+                </div>
+            </div>
+            <div class="dividers-block"></div>
+            <div class="row g-2">
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <i class="icofont-clock-time"></i>
+                        <span class="ms-2">Plan Name:</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <i class="icofont-sand-clock"></i>
+                        <span class="ms-2">@Model.PlanName</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dividers-block"></div>
+            <div class="row g-2">
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <i class="icofont-clock-time"></i>
+                        <span class="ms-2">Renewal Date:</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <i class="icofont-sand-clock"></i>
+                        <span class="ms-2">@Model.RenewalDate.ToString("dd MMM,yyyy")</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dividers-block"></div>
+            <div class="row g-2">
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <i class="icofont-clock-time"></i>
+                        <span class="ms-2">Expiry Date:</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <i class="icofont-sand-clock"></i>
+                        @if (Model.PlanCode == 200)
+                        {
+                            <span class="ms-2">Not Applicable on FREE VERSION</span>
+                        }
+                        else
+                        {
+                            <span class="ms-2">@Model.ExpiryDate.ToString("dd MMM,yyyy")</span>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="dividers-block"></div>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <a asp-action="RenewSubscription" asp-controller="Client" class="btn btn-outline-secondary" id="btnRenewSubscription"><i class="icofont-edit text-success"></i> Renew Subscription</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="subcription" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="subModal">
+        <div class="modal-content" id="selectSubContent">
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+         $('#btnRenewSubscription').click(function (e) {
+             e.preventDefault();
+             $.ajax({
+                 url: '@Url.Action("RenewSubscription", "Client")',
+                 type: "get"
+            }).done(function (data) {
+                $('#selectSubContent').html(data);
+                var myModal = new bootstrap.Modal(document.getElementById("subcription"), {});
+                myModal.show();
+                $("#SubscriptionForm").submit(function (e) {
+
+                    //prevent Default functionality
+                    e.preventDefault();
+
+                    //do your own request an handle the results
+                    $.ajax({
+                        url: '@Url.Action("RenewSubscription", "Client")',
+                        type: "post",
+                        data: $("#SubscriptionForm").serialize()
+                    }).done(function (data) {
+                        console.log(data);
+                        if (data.success) {
+                            window.location.href = data.data;
+                        }
+                        else {
+                            $("#errorMessage").text(data.message);
+                        }
+                        });
+                });
+            });
+         })
+    </script>
+}
+

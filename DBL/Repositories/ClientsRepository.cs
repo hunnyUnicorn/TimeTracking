@@ -143,5 +143,28 @@ namespace DBL.Repositories
             }
         }
         #endregion
+        #region invoice
+        public async Task<IEnumerable<TimeTrackerInvoice>> GetClientInvoices(int ClientCode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ClientCode", ClientCode);
+                return (await connection.QueryAsync<TimeTrackerInvoice>("Sp_GetInvoices_Client", parameters, commandType: CommandType.StoredProcedure)).ToList();
+            }
+        }
+        #endregion
+        public async Task<SubPlanDets> GetPlanDetails(int clientcode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ClientCode", clientcode);
+                parameters.Add("@usertype", 2);
+                return (await connection.QueryAsync<SubPlanDets>("Sp_Get_SubDets", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
     }
 }

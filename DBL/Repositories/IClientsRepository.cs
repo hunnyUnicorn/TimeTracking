@@ -23,5 +23,9 @@ namespace DBL.Repositories
         Task<IEnumerable<screenshotdets>> GetScreenShotsPerClient(int filterType, string value, int clientcode);
         Task<IEnumerable<TimeTrack>> TimeTracks(int clientCode);
         #endregion
+        #region Invoices
+        Task<IEnumerable<TimeTrackerInvoice>> GetClientInvoices(int ClientCode);
+        #endregion
+        Task<SubPlanDets> GetPlanDetails(int clientcode);
     }
 }

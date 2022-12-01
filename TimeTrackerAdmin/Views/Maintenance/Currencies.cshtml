@@ -1,7 +1,110 @@
-﻿
+﻿@model IEnumerable<Currency>
 @{
-    ViewData["Title"] = "Currencies";
+    ViewData["Title"] = "ProjectCategories";
 }
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row align-items-center">
+            <div class="border-0 mb-4">
+                <div class="card-header py-3 no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
+                    <h3 class="h4 mb-0">Currencies</h3>
+                    <div class="col-auto d-flex w-sm-100 mt-2 mt-sm-0">
+                        <button type="button" class="btn btn-dark btn-set-task w-sm-100" data-bs-toggle="modal" data-bs-target="#sendsheet" id="btnCreateCurrency"><i class="icofont-plus-circle me-2 fs-6"></i>Add Currency</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="timetracker-table_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                            <div class="col-sm-12">
+                                <table id="timetracker-table" class="table table-hover custom-table align-middle mb-0 nowrap dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="timetracker-table_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>ISO Name</th>
+                                            <th>ISO Symbol</th>
+                                            <th>Full Name</th>
+                                            <th class="dt-body-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-<h1>Currencies</h1>
+                                        @foreach (var currency in Model)
+                                        {
+                                            <tr>
+                                                <td><strong>@currency.ISOName</strong></td>
+                                                <td><strong>@currency.CCYSymbol</strong></td>
+                                                <td><strong>@currency.CCYName</strong></td>
+                                                <td class="dt-body-right">
+                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                        <button type="button" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i></button>
+                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-close-line-squared-alt text-danger"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createCurrency" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="currencyModal">
+        <div class="modal-content" id="currencyContent">
+        </div>
+    </div>
+</div>
+@section css{
+    <link rel="stylesheet" href="~/plugin/datatables/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="~/plugin/datatables/dataTables.bootstrap5.min.css">
+}
+@section Scripts{
+    <script src="~/bundles/dataTables.bundle.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#timetracker-table').addClass('nowrap').dataTable({
+                responsive: true
+            });
+        });
+        $('#btnCreateCurrency').click(function (e) {
+             e.preventDefault();
+             $.ajax({
+                 url: '@Url.Action("Currency", "Maintenance")',
+                 type: "get"
+            }).done(function (data) {
+                $('#currencyContent').html(data);
+                var myModal = new bootstrap.Modal(document.getElementById("createCurrency"), {});
+                myModal.show();
+                $("#CurrencyForm").submit(function (e) {
 
+                    //prevent Default functionality
+                    e.preventDefault();
+
+                    //do your own request an handle the results
+                    $.ajax({
+                        url: '@Url.Action("Currency", "Maintenance")',
+                        type: "post",
+                        data: $("#CurrencyForm").serialize()
+                    }).done(function (data) {
+                        if (data.success) {
+                            $("#errorMessage").removeClass("text-danger");
+                            $("#errorMessage").addClass("text-success");
+                            $("#errorMessage").text(data.message);
+                        }
+                        else {
+                            $("#errorMessage").text(data.message);
+                        }
+                        });
+                });
+            });
+         })
+    </script>
+
+}

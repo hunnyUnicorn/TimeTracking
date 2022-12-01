@@ -1,0 +1,35 @@
+﻿@model Currency
+<div class="modal-header">
+    <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Create Invoice</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <form id="CurrencyForm">
+        <div class="mb-3">
+            <label asp-for="CCYName" class="form-label">Currency Name</label>
+            <input asp-for="CCYName" class="form-control">
+        </div>
+        <div class="deadline-form">
+            <div class="row g-3 mb-3">
+                <div class="col">
+                    <label asp-for="ISOName" class="form-label">ISO Name</label>
+                    <input asp-for="ISOName" class="form-control">
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col">
+                    <label asp-for="CCYSymbol" class="form-label">Currency Symbol</label>
+                    <input asp-for="CCYSymbol" class="form-control">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <label class="text-danger" id="errorMessage"></label>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+    <button type="submit" form="CurrencyForm" class="btn btn-primary">Create Currency</button>
+</div>

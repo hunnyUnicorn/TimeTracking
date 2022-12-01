@@ -36,7 +36,7 @@ namespace FastReport
     <Style Name="HeaderStyle" Fill.Color="DimGray" TextFill.Color="White" Font="Times New Roman, 14pt, style=Bold"/>
   </Styles>
   <Dictionary>
-    <MsSqlDataConnection Name="TimeTrackerConn" ConnectionString="rijcmlq1lLcTwHGREtL3dY9svBlirwIWaZIjhSmyoz1p4f3aydId89didIZ/j5J/8IkMpqck3na/QS/+rDISm2W3OzrqcKYzsLP8U6eFzGnIk0m66PUpsJ85xGLvqda9wKsMjfl20/xenfLIPTIXfqFdqv8rhZAbu3XPAa303HVdU4VvhEEH7vyOBl/0UAyDxp4ivYCpsA4l7qCsbe/IdfQhb89V0gEAENM32p4SSue14CiNYg=">
+    <MsSqlDataConnection Name="Track-MyHoursConn" ConnectionString="rijcmlq1lLcTwHGREtL3dY9svBlirwIWaZIjhSmyoz1p4f3aydId89didIZ/j5J/8IkMpqck3na/QS/+rDISm2W3OzrqcKYzsLP8U6eFzGnIk0m66PUpsJ85xGLvqda9wKsMjfl20/xenfLIPTIXfqFdqv8rhZAbu3XPAa303HVdU4VvhEEH7vyOBl/0UAyDxp4ivYCpsA4l7qCsbe/IdfQhb89V0gEAENM32p4SSue14CiNYg=">
       <TableDataSource Name="invoicedets" Alias="Data" DataType="System.Int32" Enabled="true" TableName="invoicedets">
         <Column Name="ItemDescr" DataType="System.String"/>
         <Column Name="Item" DataType="System.String"/>

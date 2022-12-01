@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TimeTrackerInvoice>
 @{
     ViewData["Title"] = "Invoices";
-    Layout = "~/Views/Shared/_LayoutDevelopers.cshtml";
+    Layout = "~/Views/Shared/_LayoutClients.cshtml";
     var invoiceModel = new TimeTrackerInvoice();
 }
 
@@ -13,7 +13,6 @@
             <div class="border-0 mb-4">
                 <div class="card-header no-bg bg-transparent d-flex align-items-center px-0 justify-content-between border-bottom flex-wrap">
                     <h3 class="fw-bold mb-0 py-3 pb-2">Invoices</h3>
-                    <button type="button" class="btn btn-dark w-sm-100 mb-2 mb-md-0 float-end" id="btnCreateInvoice" data-bs-toggle="modal" data-bs-target="#createinvoice"><i class="icofont-plus-circle me-2 fs-6"></i>Create Invoice</button>
                 </div>
                 <div class="d-flex py-2 project-tab flex-wrap w-sm-100 ms-auto">
 
@@ -30,7 +29,7 @@
                             <thead>
                                 <tr role="row">
                                     <th>Invoice Ref</th>
-                                    <th>Client Name </th>
+                                    <th>Developer Name </th>
                                     <th>Project Name</th>
                                     <th>Hours Worked</th>
                                     <th>Total Amount</th>
@@ -43,14 +42,13 @@
                                 {
                                     <tr role="row" class="odd">
                                         <td><strong>@invoice.InvoiceRef</strong></td>
-                                        <td>@invoice.ClientName</td>
+                                        <td>@invoice.DeveloperName</td>
                                         <td>@invoice.ProjectName</td>
                                         <td>@invoice.TotalHours</td>
                                         <td>@invoice.TotalAmount</td>
                                         <td class=" dt-body-right">
                                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                <a asp-action="InvoiceView" asp-route-invoicecode="@invoice.InvoiceCode" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i> View Details</a>
-                                                <a asp-action="InvoiceView" asp-route-invoicecode="@invoice.InvoiceCode" class="btn btn-outline-danger ms-3"><i class="icofont-save text-danger"></i> Edit Invoice</a>
+                                                <a asp-action="InvoiceView" asp-controller="Client" asp-route-invoicecode="@invoice.InvoiceCode" class="btn btn-outline-secondary"><i class="icofont-save text-success"></i> View Details</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -140,5 +138,4 @@
          })
     </script>
 }
-
 

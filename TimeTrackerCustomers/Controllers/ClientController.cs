@@ -9,6 +9,8 @@ using DBL.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using Newtonsoft.Json.Linq;
+using Stripe.Checkout;
+using TimeTrackerCustomers.Helpers;
 
 namespace TimeTrackerCustomers.Controllers
 {
@@ -178,6 +180,105 @@ namespace TimeTrackerCustomers.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> Invoices()
+        {
+            var model = new List<TimeTrackerInvoice>();
+            try
+            {
+                model = (await bl.GetClientInvoicesAsync(SessionClientData.ClientCode)).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogUtil.Error(logFile, "Developer.Invoices()", ex);
+            }
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> InvoiceView(int invoicecode)
+        {
+            var invoicedets = new List<InvoiceDets>();
+            invoicedets = (await bl.GetInvoiceDets(invoicecode)).ToList();
+            ViewBag.DevName = invoicedets.Where(x => x.Item == "Dev_Name" && x.ItemType == 3).FirstOrDefault().ItemValue;
+            ViewBag.Invoiceref = invoicedets.Where(x => x.Item == "Invoice_Ref" && x.ItemType == 0).FirstOrDefault().ItemValue;
+            ViewBag.DateGen = invoicedets.Where(x => x.Item == "Gen_Date" && x.ItemType == 0).FirstOrDefault().ItemValue;
+            ViewBag.ClientName = invoicedets.Where(x => x.Item == "Client_Name" && x.ItemType == 2).FirstOrDefault().ItemValue;
+            ViewBag.ProjectName = invoicedets.Where(x => x.Item == "Project_Title" && x.ItemType == 1).FirstOrDefault().ItemValue;
+            ViewBag.InvoiceCode = invoicecode;
+            return View("InvoiceView", invoicedets);
+        }
+        [HttpGet]
+        public async Task<IActionResult> SubscriptionManagement()
+        {
+            var model = new SubPlanDets();
+            model = await bl.GetClientPlanDetails(SessionClientData.ClientCode);
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<IActionResult> RenewSubscription()
+        {
+            await SubscriptionItems(2);
+            return PartialView("_RenewSubscription");
+        }
+        [HttpPost]
+        public async Task<IActionResult> RenewSubscription(RenewSub model)
+        {
+            ReqResult reqResult = new ReqResult { Success = true };
+            try
+            {
+                var stripeDets = await bl.CreateTxn(model.SubPlanCode, SessionClientData.ClientCode);
+                string baseUrl = string.Format("{0}://{1}",
+                      HttpContext.Request.Scheme, HttpContext.Request.Host);
+                var options = new SessionCreateOptions
+                {
+                    SuccessUrl = String.Format("{0}/Client/PaymentSuccess", baseUrl),
+                    CancelUrl = String.Format("{0}/Client/PaymentCancel", baseUrl),
+                    ClientReferenceId = stripeDets.ClientReferenceId,
+                    Currency = stripeDets.currency.ToLower(),
+                    CustomerEmail = stripeDets.Email,
+                    LineItems = new List<SessionLineItemOptions>
+            {
+            new SessionLineItemOptions
+            {
+               PriceData = new SessionLineItemPriceDataOptions{
+                Currency =stripeDets.currency,
+                UnitAmountDecimal = stripeDets.Amount,
+                ProductData = new SessionLineItemPriceDataProductDataOptions{
+                    Name = stripeDets.ProductName,
+                }
+               },
+               Quantity = 1
+            },
+            },
+                    Mode = stripeDets.mode,
+                };
+                var service = new SessionService();
+                Session session = service.Create(options);
+                reqResult.Data = session.Url;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "stripeSessionId", session.Id);
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "txnCode", stripeDets.ClientReferenceId);
+            }
+            catch (Exception ex)
+            {
+                reqResult.Success = false;
+            }
+            return Json(reqResult);
+        }
+        [HttpGet]
+        public async Task<IActionResult> PaymentSuccess()
+        {
+            var sessionid = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "stripeSessionId");
+            var txncode = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "txnCode");
+            var service = new SessionService();
+            var session = service.Get(sessionid);
+            await bl.UpdateStripeDets(txncode, sessionid, session.PaymentIntentId);
+            return RedirectToAction("SubscriptionManagement");
+        }
+        [HttpGet]
+        public async Task<IActionResult> PaymentCancel()
+        {
+            return View();
+        }
         private async Task LoadScreenCastFilterItems(int role = 0)
         {
             var list = (await bl.GetItemListAsync(ListItemType.ProjectDevelopers, role)).Select(x => new SelectListItem
@@ -204,6 +305,16 @@ namespace TimeTrackerCustomers.Controllers
             }).ToList();
 
             ViewData["Currencies"] = list;
+        }
+        private async Task SubscriptionItems(int role = 0)
+        {
+            var list = (await bl.GetItemListAsync(ListItemType.Subscriptions, role)).Select(x => new SelectListItem
+            {
+                Text = x.Text,
+                Value = x.Value
+            }).ToList();
+
+            ViewData["Subcriptions"] = list;
         }
     }
 }

@@ -167,14 +167,14 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<Developer>("Sp_Get_Developers", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
-        public async Task<IEnumerable<Invoice>> GetDeveloperInvoices(int DevCode)
+        public async Task<IEnumerable<TimeTrackerInvoice>> GetDeveloperInvoices(int DevCode)
         {
             using (var connection = new SqlConnection(_connString))
             {
                 connection.Open();
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@DevCode", DevCode);
-                return (await connection.QueryAsync<Invoice>("Sp_GetInvoices_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
+                return (await connection.QueryAsync<TimeTrackerInvoice>("Sp_GetInvoices_Developer", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
         public async Task<IEnumerable<InvoiceDets>> GetInvoiceDets(int invoicecode)
@@ -187,7 +187,7 @@ namespace DBL.Repositories
                 return (await connection.QueryAsync<InvoiceDets>("Sp_Get_InvoiceDets", parameters, commandType: CommandType.StoredProcedure)).ToList();
             }
         }
-        public async Task<BaseEntity> Create_Invoice(Invoice model)
+        public async Task<BaseEntity> Create_Invoice(TimeTrackerInvoice model)
         {
             using (var connection = new SqlConnection(_connString))
             {
@@ -199,6 +199,50 @@ namespace DBL.Repositories
                 parameters.Add("@ProjectCode", model.ProjectCode);
                 parameters.Add("@DeveloperCode", model.DeveloperCode);
                 return (await connection.QueryAsync<BaseEntity>("Sp_Create_Invoice", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<GenericModel> Get_Client_Invoice_Mail_Settings(int invoicecode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@invoicecode", invoicecode);
+                return (await connection.QueryAsync<GenericModel>("Sp_Client_Mail_Settings", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<StripeDets> CreateTxn(int subplancode,int clientcode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@SubPlanCode", subplancode);
+                parameters.Add("@ClientCode", clientcode);
+                return (await connection.QueryAsync<StripeDets>("Sp_Renew_Subscription", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<BaseEntity> UpdateStripeDets(int txncode, string stripesessionid,string paymentintentid)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@TxnCode", txncode);
+                parameters.Add("@StripeSession", stripesessionid);
+                parameters.Add("@StripePaymentIntentId", paymentintentid);
+                return (await connection.QueryAsync<BaseEntity>("Sp_UpdateTxnSession", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+        }
+        public async Task<SubPlanDets> GetPlanDetails(int devcode)
+        {
+            using (var connection = new SqlConnection(_connString))
+            {
+                connection.Open();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ClientCode", devcode);
+                parameters.Add("@usertype", 1);
+                return (await connection.QueryAsync<SubPlanDets>("Sp_Get_SubDets", parameters, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
         }
     }

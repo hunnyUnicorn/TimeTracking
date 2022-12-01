@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<InvoiceDets>
 @{
     decimal sum = 0;
- }
+}
 <div class="modal-header">
-    <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Invoice 001</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <h5 class="modal-title  fw-bold" id="createprojectlLabel"></h5>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a asp-action="InvoicePreview" asp-controller="Developer" asp-route-invoicecode="100" target="_blank" class="btn btn-secondary print">Print</a>
+        <a asp-action="InvoiceEmail" asp-controller="Developer" inCode="@ViewBag.InvoiceCode" type="button" form="CreateProject" class="btn btn-primary" id="btnSendEmail">Send Via Email</a>
+    </div>
 </div>
 <div class="modal-body">
     <page size="A4" id="invoice">
@@ -57,7 +60,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                             
+
                             @foreach (var det in Model.Where(x => x.ItemType == 4))
                             {
                                 sum = sum + Convert.ToDecimal(det.ItemValue);
@@ -84,7 +87,60 @@
         </div>
     </page>
 </div>
-<div class="modal-footer">
-    <a asp-action="InvoicePreview" asp-controller="Developer" asp-route-invoicecode="100" target="_blank" class="btn btn-secondary print">Print</a>
-    <button type="button" form="CreateProject" class="btn btn-primary">Send Via Email</button>
-</div>
+@section css{
+    <link rel="stylesheet" href="~/lib/sweetalert2/dist/sweetalert2.css"/>
+            } 
+@section Scripts{
+    <script src="~/lib/sweetalert2/dist/sweetalert2.js"></script>
+    <script>
+        $('#btnSendEmail').click(function (e) { 
+            e.preventDefault();
+            var url = $(this).attr('href');
+            var icode = $(this).attr('inCode');
+            showConfirmMessage('Send Invoice', 'Are you sure you want to send this invoice to client\'s email?', function () {
+                executeAction(url, icode);
+            });
+        })
+ 
+
+     function showConfirmMessage(title, message, callback) {
+         Swal.fire({
+             title: title,
+             text: message,
+             type: 'warning',
+             showCancelButton: true,
+             confirmButtonText: '<i class="fa fa-check"></i> Yes',
+             cancelButtonText: '<i class="fa fa-close"></i> No',
+             confirmButtonClass: 'btn-success btn mr-1',
+             cancelButtonClass: 'bg-green btn ml-1',
+             buttonsStyling: false
+         }).then((result) => {
+             if (result.value) {
+                 callback();
+             }
+         });
+     }
+
+     function executeAction(url,inCode) {
+             swal.fire({
+                title: '<i class="fa fa-spin fa-spinner fa-3x"></i>',
+                html: '<h4>Processing.....</h4>',
+                footer: 'Please wait....',
+                showConfirmButton: false
+             });
+
+            $.ajax({
+                type: "post",
+                url: url,
+                data: { invoicecode:inCode}
+            }).done(function (data) {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+
+}

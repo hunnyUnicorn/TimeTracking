@@ -1,0 +1,91 @@
+﻿@model IEnumerable<InvoiceDets>
+@{
+    ViewData["Title"] = "InvoiceView";
+    Layout = "~/Views/Shared/_LayoutClients.cshtml";
+    decimal sum = 0;
+}
+
+<div class="modal-header">
+    <h5 class="modal-title  fw-bold" id="createprojectlLabel"></h5>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a asp-action="InvoicePreview" asp-controller="Developer" asp-route-invoicecode="100" target="_blank" class="btn btn-secondary print">Print</a>
+    </div>
+</div>
+<div class="modal-body">
+    <page size="A4" id="invoice">
+        <div class="container-fluid w-auto p-3 m-4 border border-secondary invoice-container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h6 class="underline bold"><strong>Monthly Invoice</strong></h6>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-6 text-end">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <td>Developer</td>
+                            <td>@ViewBag.DevName</td>
+                        </tr>
+                        <tr>
+                            <td>Invoice No</td>
+                            <td>@ViewBag.Invoiceref</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>@ViewBag.DateGen</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-start">
+                <div class="col-md-6">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <td>Client</td>
+                            <td>@ViewBag.ClientName</td>
+                        </tr>
+                        <tr>
+                            <td>Project</td>
+                            <td>@ViewBag.ProjectName</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Total Time</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var det in Model.Where(x => x.ItemType == 4))
+                            {
+                                sum = sum + Convert.ToDecimal(det.ItemValue);
+                                <tr>
+                                    <td>@det.ItemDescr</td>
+                                    <td>@det.Item</td>
+                                    <td>$ @det.ItemValue</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><strong>Total</strong></td>
+                                <td><strong>$ @sum</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-8 text-center"><i>Terms and conditions apply</i></div>
+            </div>
+        </div>
+    </page>
+</div>

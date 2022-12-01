@@ -607,7 +607,7 @@ namespace DBL
         {
             return await db.DeveloperRepository.GetTimeTracks(devcode);
         }
-        public async Task<IEnumerable<Invoice>> GetDeveloperInvoices(int devcode)
+        public async Task<IEnumerable<TimeTrackerInvoice>> GetDeveloperInvoices(int devcode)
         {
             return await db.DeveloperRepository.GetDeveloperInvoices(devcode);
         }
@@ -615,9 +615,40 @@ namespace DBL
         {
             return await db.DeveloperRepository.GetInvoiceDets(invoicecode);
         }
-        public async Task<BaseEntity> CreateInvoice(Invoice model)
+        public async Task<BaseEntity> CreateInvoice(TimeTrackerInvoice model)
         {
             return await db.DeveloperRepository.Create_Invoice(model);
+        }
+        public async Task<BaseEntity> SendClientInvoice(byte[] invoice,int invoicecode,string invoiceName)
+        {
+            var resp = new BaseEntity {RespStatus=1,RespMessage="Failed" };
+            List<MailAttachment> attachments = new List<MailAttachment>();
+            Stream stream = new MemoryStream(invoice);
+            attachments.Add(new MailAttachment {ItemName=invoiceName,ItemStream=stream,MediaType= "application/pdf" });
+            try
+            {
+                var mailSettings = await db.DeveloperRepository.Get_Client_Invoice_Mail_Settings(invoicecode);
+                int port = Convert.ToInt32(mailSettings.Data5);
+                SendMail(mailSettings.Data4, port, mailSettings.Data6 == "1", mailSettings.Data7, mailSettings.Data8, mailSettings.Data3, mailSettings.Data9, mailSettings.Data2,attachments);
+            }
+            catch(Exception ex)
+            {
+                resp.RespMessage = ex.Message;
+                resp.RespStatus = 2;
+            }
+            return resp;
+        }
+        public async Task<StripeDets> CreateTxn(int subplancode,int clientcode)
+        {
+            return await db.DeveloperRepository.CreateTxn(subplancode, clientcode);
+        }
+        public async Task<BaseEntity> UpdateStripeDets(int txncode, string stripesessionid, string paymentintentid)
+        {
+            return await db.DeveloperRepository.UpdateStripeDets(txncode, stripesessionid, paymentintentid);
+        }
+        public async Task<SubPlanDets> GetDeveloperPlanDetails(int devcode)
+        {
+            return await db.DeveloperRepository.GetPlanDetails(devcode);
         }
         #endregion
         #region Common Actions
@@ -831,6 +862,14 @@ namespace DBL
         {
             return await db.ClientsRepository.TimeTracks(clientcode);
         }
+        public async Task<IEnumerable<TimeTrackerInvoice>> GetClientInvoicesAsync(int clientcode)
+        {
+            return await db.ClientsRepository.GetClientInvoices(clientcode);
+        }
+        public async Task<SubPlanDets> GetClientPlanDetails(int clientcode)
+        {
+            return await db.ClientsRepository.GetPlanDetails(clientcode);
+        }
         #region projects
         public async Task<BaseEntity> CreateProject(Project project)
         {
@@ -946,6 +985,14 @@ namespace DBL
         public async Task<IEnumerable<ProjectCategory>> GetProjectCategoriesAsync()
         {
             return await db.MaintenanceRepository.GetProjectCategories();
+        }
+        public async Task<IEnumerable<Currency>> GetCurrenciesAsync()
+        {
+            return await db.MaintenanceRepository.GetCurrencies();
+        }
+        public async Task<BaseEntity> CreateCurrency(Currency model)
+        {
+            return await db.MaintenanceRepository.CreateCurrency(model);
         }
         #endregion
     }

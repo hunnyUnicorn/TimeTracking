@@ -11,5 +11,7 @@ namespace DBL.Repositories
     {
         Task<IEnumerable<Subscription>> GetSubscriptions();
         Task<IEnumerable<ProjectCategory>> GetProjectCategories();
+        Task<IEnumerable<Currency>> GetCurrencies();
+        Task<BaseEntity> CreateCurrency(Currency model);
     }
 }

@@ -3,6 +3,7 @@ using FastReport.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.FileProviders;
 using Rotativa.AspNetCore;
+using Stripe;
 using TimeTrackerCustomers;
 using TimeTrackerCustomers.Utils;
 
@@ -55,5 +56,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 IWebHostEnvironment env = app.Environment;
 RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env);
+StripeConfiguration.ApiKey = "sk_test_51Lnd7iSI2vuBxoF6mqrfp7jMDp4FjvChhD0R4zTSqbjSdqjSm7r1tQovqKAxTI2hlOHA6ogPviPze8CwjsdmhB4i00X45J25EC";
 FastReport.Utils.RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
 app.Run();

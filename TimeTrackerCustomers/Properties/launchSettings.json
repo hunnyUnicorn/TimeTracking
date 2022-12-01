@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "TimeTrackerCustomers": {
+    "Track-MyHoursCustomers": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

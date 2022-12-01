@@ -23,8 +23,12 @@ namespace DBL.Repositories
         Task<IEnumerable<ProjectInvite>> ProjectInvites(int DeveloperCode);
         Task<BaseEntity> Invite_Action(int InviteAction, int DevCode, int InviteCode, string RejectReason);
         Task<IEnumerable<Developer>> GetDevelopersAsync();
-        Task<IEnumerable<Invoice>> GetDeveloperInvoices(int DevCode);
+        Task<IEnumerable<TimeTrackerInvoice>> GetDeveloperInvoices(int DevCode);
         Task<IEnumerable<InvoiceDets>> GetInvoiceDets(int invoicecode);
-        Task<BaseEntity> Create_Invoice(Invoice model);
+        Task<BaseEntity> Create_Invoice(TimeTrackerInvoice model);
+        Task<GenericModel> Get_Client_Invoice_Mail_Settings(int invoicecode);
+        Task<StripeDets> CreateTxn(int subplancode, int clientcode);
+        Task<BaseEntity> UpdateStripeDets(int txncode, string stripesessionid, string paymentintentid);
+        Task<SubPlanDets> GetPlanDetails(int devcode);
     }
 }

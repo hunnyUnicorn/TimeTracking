@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Data;
 
-namespace TimeTrackerAdmin.Helpers
+namespace TimeTrackerCustomers.Helpers
 {
     public static class SessionHelper
     {
